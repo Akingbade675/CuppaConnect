@@ -43,6 +43,9 @@ class AppText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: 2,
+      softWrap: false,
+      overflow: TextOverflow.fade,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,

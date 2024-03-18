@@ -5,7 +5,8 @@ class AppIcons {
   static const arrowRight = '${prefix}arrow-right.svg';
   static const bag = '${prefix}bag.svg';
   static const bean = '${prefix}bean.png';
-  static const bike = '${prefix}bike.svg';
+  static const bike = '${prefix}bike.png';
+  static const bikeMarker = '${prefix}bike_marker.png';
   static const discount = '${prefix}Discount.svg';
   static const dots = '${prefix}dots.svg';
   static const edit = '${prefix}edit.svg';
@@ -18,7 +19,7 @@ class AppIcons {
   static const money = '${prefix}moneys.svg';
   static const note = '${prefix}note.svg';
   static const notification = '${prefix}notification.svg';
-  static const pin = '${prefix}pin.svg';
+  static const pin = '${prefix}pin.png';
   static const plus = '${prefix}plus.svg';
   static const search = '${prefix}search-normal.svg';
   static const setting = '${prefix}setting-4.svg';

@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeItemCard extends StatelessWidget {
-  const CoffeeItemCard({Key? key}) : super(key: key);
+  final int index;
+  const CoffeeItemCard({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +36,8 @@ class CoffeeItemCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/coffee_1.png'),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/coffee_${index + 1}.png'),
                     fit: BoxFit.cover,
                   ),
                 ),

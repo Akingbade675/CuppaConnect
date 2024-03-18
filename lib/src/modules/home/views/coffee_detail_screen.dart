@@ -1,5 +1,6 @@
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/order/views/order_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icons.dart';
@@ -16,7 +17,7 @@ class CoffeeDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Detail'),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: context.pop,
           icon: SvgPicture.asset(AppIcons.arrowLeft),
         ),
         actions: [

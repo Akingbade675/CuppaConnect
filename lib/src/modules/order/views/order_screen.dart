@@ -1,6 +1,7 @@
 import 'package:coffee_shop_app/src/components/app_text.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
+import 'package:coffee_shop_app/src/modules/delivery/views/delivery_screen.dart';
 import 'package:coffee_shop_app/src/modules/order/components/coffee_qty_chooser_widget.dart';
 import 'package:coffee_shop_app/src/modules/order/components/custom_tab_bar.dart';
 import 'package:coffee_shop_app/src/modules/order/components/delivery_tab_view.dart';
@@ -34,7 +35,7 @@ class _OrderScreenState extends State<OrderScreen>
       appBar: AppBar(
         title: const Text('Order'),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => context.pop(),
           icon: SvgPicture.asset(AppIcons.arrowLeft),
         ),
       ),
@@ -54,6 +55,7 @@ class _OrderScreenState extends State<OrderScreen>
                     controller: tabController,
                     children: const [
                       DeliveryTabView(),
+                      Center(child: Text('Pickup')),
                     ],
                   ),
                 ),
@@ -135,7 +137,7 @@ class _OrderScreenState extends State<OrderScreen>
                   ),
                   SizedBox(height: 16.h),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => context.push(const DeliveryScreen()),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 24.h),
                       backgroundColor: AppColors.brown,

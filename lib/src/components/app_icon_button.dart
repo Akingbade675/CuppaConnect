@@ -9,8 +9,10 @@ class AppIconButton extends StatelessWidget {
   final Color color;
   final Color iconColor;
   final double size;
+  final double? iconSize;
   final double padding;
   final bool isPng;
+  final List<BoxShadow>? boxShadow;
 
   const AppIconButton({
     super.key,
@@ -21,6 +23,8 @@ class AppIconButton extends StatelessWidget {
     this.color = AppColors.brown,
     this.iconColor = Colors.white,
     this.isPng = false,
+    this.iconSize,
+    this.boxShadow,
   });
 
   @override
@@ -33,12 +37,14 @@ class AppIconButton extends StatelessWidget {
         padding: EdgeInsets.all(padding.w),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: boxShadow,
         ),
         child: isPng
             ? Image.asset(iconPath)
             : SvgPicture.asset(
                 iconPath,
+                width: iconSize?.w,
                 colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
               ),
       ),
