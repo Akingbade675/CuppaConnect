@@ -40,6 +40,9 @@ dependencies:
     flutter_polyline_points: ^2.0.0
     google_maps_flutter_web: ^0.5.4+3
     location: ^5.0.3
+    flutter_native_splash: ^2.4.0
+    flutter_bloc: ^8.1.5
+    readmore: ^3.0.0
 
 dev_dependencies:
     flutter_test:
@@ -66,6 +69,25 @@ flutter:
     assets:
         - assets/images/
         - assets/icons/
+        - assets/app_icons/
+        - assets/app_images/
+        - assets/coffee_assets/
+        - assets/coffee_assets/cappuccino/square/
+        - assets/coffee_assets/cappuccino/portrait/
+        - assets/coffee_assets/americano/square/
+        - assets/coffee_assets/americano/portrait/
+        - assets/coffee_assets/espresso/square/
+        - assets/coffee_assets/espresso/portrait/
+        - assets/coffee_assets/latte/square/
+        - assets/coffee_assets/latte/portrait/
+        - assets/coffee_assets/macchiato/square/
+        - assets/coffee_assets/macchiato/portrait/
+        - assets/coffee_assets/black_coffee/square/
+        - assets/coffee_assets/black_coffee/portrait/
+        - assets/coffee_assets/arabica_coffee_beans/
+        - assets/coffee_assets/robusta_coffee_beans/
+        - assets/coffee_assets/liberica_coffee_beans/
+        - assets/coffee_assets/excelsa_coffee_beans/
     #   - images/a_dot_ham.jpeg
 
     # An image asset can refer to one or more resolution-specific "variants", see
@@ -89,6 +111,16 @@ flutter:
               - asset: assets/fonts/Sora-SemiBold.ttf
                 weight: 600
               - asset: assets/fonts/Sora-Bold.ttf
+                weight: 700
+        - family: Poppins
+          fonts:
+              - asset: assets/fonts/Poppins-Regular.ttf
+                weight: 400
+              - asset: assets/fonts/Poppins-Medium.ttf
+                weight: 500
+              - asset: assets/fonts/Poppins-SemiBold.ttf
+                weight: 600
+              - asset: assets/fonts/Poppins-Bold.ttf
                 weight: 700
     #   - family: Trajan Pro
     #     fonts:

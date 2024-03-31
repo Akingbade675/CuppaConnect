@@ -1,6 +1,6 @@
 import 'package:coffee_shop_app/src/components/app_text.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +37,7 @@ class MapBottomSheet extends StatelessWidget {
             height: 5,
             width: 44.w,
             decoration: BoxDecoration(
-              color: AppColors.lightGrey,
+              color: AppColors.grey20,
               borderRadius: BorderRadius.circular(3.r),
             ),
           ),
@@ -51,7 +51,7 @@ class MapBottomSheet extends StatelessWidget {
             TextSpan(
               text: 'Delivery to ',
               style: TextStyle(
-                color: AppColors.lightGrey,
+                color: AppColors.grey20,
                 fontWeight: FontWeight.w400,
                 fontSize: 12.sp,
               ),
@@ -59,7 +59,7 @@ class MapBottomSheet extends StatelessWidget {
                 TextSpan(
                   text: 'Magodo Ikeja, Ikosi Ketu',
                   style: TextStyle(
-                    color: AppColors.grey,
+                    color: AppColors.grey100,
                     fontWeight: FontWeight.w600,
                     fontSize: 12.sp,
                   ),
@@ -139,7 +139,7 @@ class MapBottomSheet extends StatelessWidget {
                       maxLines: 2,
                       style: TextStyle(
                         overflow: TextOverflow.ellipsis,
-                        color: AppColors.grey,
+                        color: AppColors.grey100,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                       ),
@@ -175,7 +175,7 @@ class MapBottomSheet extends StatelessWidget {
                   const SizedBox(height: 8),
                   AppText(
                     'Delivery Agent',
-                    color: AppColors.grey,
+                    color: AppColors.grey100,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
                   ),

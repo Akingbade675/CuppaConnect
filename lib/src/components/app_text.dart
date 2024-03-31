@@ -36,7 +36,7 @@ class AppText extends StatelessWidget {
     Key? key,
     this.fontWeight = FontWeight.w600,
     this.fontSize = 16,
-    this.color = AppColors.grey,
+    this.color = AppColors.grey100,
   }) : super(key: key);
 
   @override

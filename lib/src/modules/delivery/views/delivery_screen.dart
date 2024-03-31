@@ -6,7 +6,7 @@ import 'package:coffee_shop_app/src/constants/constants.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/delivery/components/map_bottom_sheet.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

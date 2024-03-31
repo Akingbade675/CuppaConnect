@@ -1,5 +1,5 @@
 import 'package:coffee_shop_app/src/res/colors.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +29,7 @@ class DiscountTag extends StatelessWidget {
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
-              color: AppColors.grey,
+              color: AppColors.grey100,
             ),
           ),
           const Spacer(),

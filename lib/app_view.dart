@@ -1,41 +1,37 @@
-import 'package:coffee_shop_app/src/modules/delivery/views/delivery_screen.dart';
-import 'package:coffee_shop_app/src/modules/home/views/coffee_detail_screen.dart';
-import 'package:coffee_shop_app/src/modules/home/views/home_screen.dart';
+import 'package:coffee_shop_app/navigation_menu.dart';
+import 'package:coffee_shop_app/src/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppView extends StatelessWidget {
+class AppView extends StatefulWidget {
   const AppView({Key? key}) : super(key: key);
+
+  @override
+  State<AppView> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(375, 812),
-        splitScreenMode: true,
-        minTextAdapt: true,
-        builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'Sora',
-              scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(
-                backgroundColor: Colors.white,
-                // foregroundColor: const Color(0xFF2F2D2C),
-                centerTitle: true,
-                elevation: 0,
-                titleTextStyle: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF2F2D2C),
-                ),
-                actionsIconTheme: const IconThemeData(
-                  color: Color(0xFF2F2D2C),
-                ),
-              ),
-            ),
-            home: const HomeScreen(),
-          );
-        });
+      designSize: const Size(390, 854),
+      splitScreenMode: true,
+      minTextAdapt: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.dark,
+          darkTheme: AppThemes.dark,
+          home: const NavigationMenu(),
+        );
+      },
+    );
   }
 }

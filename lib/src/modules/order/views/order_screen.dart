@@ -7,7 +7,7 @@ import 'package:coffee_shop_app/src/modules/order/components/custom_tab_bar.dart
 import 'package:coffee_shop_app/src/modules/order/components/delivery_tab_view.dart';
 import 'package:coffee_shop_app/src/modules/order/components/discount_tag_widget.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -125,7 +125,7 @@ class _OrderScreenState extends State<OrderScreen>
                                 '\$ 5.53',
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12.sp,
-                                color: AppColors.grey,
+                                color: AppColors.grey100,
                               ),
                             ),
                           ],

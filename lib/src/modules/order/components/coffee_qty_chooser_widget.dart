@@ -1,7 +1,7 @@
 import 'package:coffee_shop_app/src/components/app_text.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/modules/order/views/order_screen.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,9 +26,9 @@ class CoffeeQuantityChooser extends StatelessWidget {
         SizedBox(width: 12.w),
         Column(
           children: [
-            const CoffeeTitleText(size: 16),
+            // const CoffeeTitleText(size: 16),
             SizedBox(height: 4.h),
-            const CoffeeSideText(),
+            // const CoffeeSideText(),
           ],
         ),
         const Spacer(),

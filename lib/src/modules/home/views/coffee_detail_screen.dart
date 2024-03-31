@@ -1,269 +1,146 @@
-import 'package:coffee_shop_app/src/components/app_icon_button.dart';
-import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/components/appbar.dart';
+import 'package:coffee_shop_app/src/components/rounded_container.dart';
+import 'package:coffee_shop_app/src/constants/coffees_data.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
-import 'package:coffee_shop_app/src/modules/order/views/order_screen.dart';
+import 'package:coffee_shop_app/src/modules/home/components/details_image.dart';
+import 'package:coffee_shop_app/src/modules/home/components/price_and_add_to_cart.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:readmore/readmore.dart';
 
 class CoffeeDetailScreen extends StatelessWidget {
-  const CoffeeDetailScreen({Key? key}) : super(key: key);
+  final Coffee data;
+
+  const CoffeeDetailScreen({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detail'),
-        leading: IconButton(
-          onPressed: context.pop,
-          icon: SvgPicture.asset(AppIcons.arrowLeft),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Image.asset(AppIcons.heart),
-            // icon: const Icon(Icons.favorite_border),
-          ),
-        ],
+      extendBodyBehindAppBar: true,
+      appBar: const AAppBar(
+        leadingIcon: AppIcons.back,
+        trailingIcon: AppIcons.favourite,
+        iconBgColor: AppColors.black,
+        iconBorderColor: AppColors.black,
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 30.w,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 12.h),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'assets/images/coffee_1.png',
-                    height: 226.h,
-                    width: 315.w,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                const CoffeeTitleText(size: 20),
-                SizedBox(height: 6.h),
-                const CoffeeSideText(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/filter.svg',
-                      width: 20.w,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '4.8 ',
-                      style: TextStyle(
-                        color: const Color(0xFF2F2D2C),
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      '(230)',
-                      style: TextStyle(
-                        color: const Color(0xFF808080),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Spacer(),
-                    const AppIconButton(
-                      color: Color(0xFFF9F9F9),
-                      iconPath: AppIcons.bean,
-                      isPng: true,
-                      size: 40,
-                    ),
-                    SizedBox(width: 10.w),
-                    const AppIconButton(
-                      color: Color(0xFFF9F9F9),
-                      iconPath: AppIcons.milk,
-                      isPng: true,
-                      size: 40,
-                    ),
-                  ],
-                ),
-                Divider(
-                  height: 40.h,
-                  thickness: 1,
-                  color: const Color(0xFFEAEAEA),
-                ),
-                Text(
-                  'Description',
-                  style: TextStyle(
-                    color: const Color(0xFF2F2D2C),
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Text.rich(
-                  TextSpan(
-                      text:
-                          'A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. ',
-                      style: TextStyle(
-                        color: const Color(0xFF9B9B9B),
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Read More',
-                          style: TextStyle(
-                            color: AppColors.brown,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ]),
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  'Size',
-                  style: TextStyle(
-                    color: const Color(0xFF2F2D2C),
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 12.h),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppChoiceChip('S'),
-                    AppChoiceChip('M', isSelected: true),
-                    AppChoiceChip('L'),
-                  ],
-                ),
-                SizedBox(height: 94.h),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 20.h,
-                horizontal: 30.w,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xFFEAEAEA),
-                    offset: Offset(0, -2),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-              child: Row(
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Price',
-                        style: TextStyle(
-                          color: const Color(0xFF9B9B9B),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        '\$ 4.99',
-                        style: TextStyle(
-                          color: AppColors.brown,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
+                  CoffeeDetailsImageWidget(
+                    image: data.portraitImage,
+                    name: data.name,
+                    type: data.type,
                   ),
-                  const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const OrderScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.brown,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 24.h,
-                        horizontal: 70.w,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
                     ),
-                    child: Text(
-                      'Buy Now',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ..._buildCoffeeDescription(
+                          context,
+                          text: data.description,
+                        ),
+                        ..._buildCoffeeSize(
+                          context,
+                          sizes: data.prices.keys.toList(),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
           ),
+          PriceAndAddToCartWidget(price: data.prices.values.first),
         ],
       ),
     );
   }
-}
 
-class AppChoiceChip extends StatelessWidget {
-  final String label;
-  final bool isSelected;
+  List<Widget> _buildCoffeeDescription(
+    BuildContext context, {
+    required String text,
+  }) {
+    return [
+      Text(
+        'Description',
+        style: context.textTheme.bodyLarge?.copyWith(
+          fontSize: 14.sp,
+          color: AppColors.grey20,
+        ),
+      ),
+      SizedBox(height: 10.h),
+      ReadMoreText(
+        text,
+        trimLines: 3,
+        colorClickableText: AppColors.brown,
+        trimMode: TrimMode.Line,
+        trimCollapsedText: 'Read More',
+        trimExpandedText: 'Show Less',
+        style: context.textTheme.bodySmall?.copyWith(
+          color: AppColors.grey20,
+        ),
+        moreStyle: context.textTheme.bodyLarge?.copyWith(
+          fontSize: 14.sp,
+        ),
+      ),
+      SizedBox(height: 20.h),
+    ];
+  }
 
-  const AppChoiceChip(
-    this.label, {
-    super.key,
-    this.isSelected = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ChoiceChip(
-      selected: isSelected,
-      elevation: 0,
-      pressElevation: 0,
-      label: Text(label),
-      labelStyle: TextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: 14.sp,
-        color: const Color(0xFF2F2D2C),
+  List<Widget> _buildCoffeeSize(BuildContext context,
+      {required List<String> sizes}) {
+    return [
+      Text(
+        'Size',
+        style: context.textTheme.bodyLarge?.copyWith(
+          fontSize: 14.sp,
+          color: AppColors.grey20,
+        ),
       ),
-      selectedColor: AppColors.lightBrown,
-      backgroundColor: Colors.white,
-      disabledColor: Colors.white,
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 35,
+      SizedBox(height: 12.h),
+      Row(
+        children: List.generate(
+          3,
+          (index) {
+            final isSelected = index == 1;
+            final deviceWidth = MediaQuery.of(context).size.width;
+            final chipWidth = (deviceWidth - 40.w - 24.w * 2) / 3;
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RoundedContainer(
+                  size: Size(chipWidth, 40),
+                  border: isSelected
+                      ? Border.all(
+                          color: AppColors.brown,
+                          width: 2,
+                        )
+                      : null,
+                  child: Center(
+                    child: Text(
+                      sizes[index],
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: isSelected ? AppColors.brown : AppColors.grey20,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  ),
+                ),
+                if (index != 2) SizedBox(width: 24.w),
+              ],
+            );
+          },
+        ),
       ),
-      side: BorderSide(
-        color: isSelected ? AppColors.brown : const Color(0xFFDEDEDE),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    );
+    ];
   }
 }

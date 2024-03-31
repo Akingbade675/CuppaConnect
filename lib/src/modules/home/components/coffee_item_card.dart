@@ -1,105 +1,54 @@
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
-import 'package:coffee_shop_app/src/res/icons.dart';
+import 'package:coffee_shop_app/src/components/price_widget.dart';
+import 'package:coffee_shop_app/src/constants/coffees_data.dart';
+import 'package:coffee_shop_app/src/extensions/context_ext.dart';
+import 'package:coffee_shop_app/src/res/colors.dart';
+import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeItemCard extends StatelessWidget {
-  final int index;
-  const CoffeeItemCard({Key? key, required this.index}) : super(key: key);
+  final Coffee data;
+  final bool isBean;
+
+  const CoffeeItemCard({super.key, required this.data, this.isBean = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // height: 239.h,
-      // width: 150,
-      padding: const EdgeInsets.all(4),
+      width: 150.w,
+      padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 5,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        gradient: AppColors.linearGradient,
+        borderRadius: BorderRadius.circular(22.r),
       ),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: 128.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/coffee_${index + 1}.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.16),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/filter.svg',
-                        width: 10.w,
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '4.8',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          CoffeeImageWidget(imageString: data.squareImage, isBean: isBean),
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CoffeeTitleText(),
-                const CoffeeSideText(),
-                const SizedBox(height: 8),
+                CoffeeTitleText(text: data.name),
+                SizedBox(height: 5.h),
+                CoffeeSideText(
+                  text: data.type,
+                ),
+                SizedBox(height: 8.h),
                 Row(
                   children: [
-                    Text(
-                      '\$ 4.53',
-                      style: TextStyle(
-                        color: const Color(0xFF2F4B4E),
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    PriceWidget(
+                      price: data.prices.values.first,
+                      fontSize: 15,
                     ),
                     const Spacer(),
                     const AppIconButton(
                       iconPath: AppIcons.plus,
-                      size: 32,
+                      size: 28,
                     ),
                   ],
                 ),
@@ -108,6 +57,68 @@ class CoffeeItemCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class CoffeeImageWidget extends StatelessWidget {
+  final bool isBean;
+  final String imageString;
+
+  const CoffeeImageWidget({
+    super.key,
+    required this.imageString,
+    required this.isBean,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 126.h,
+          decoration: BoxDecoration(
+            color: AppColors.grey50.withOpacity(0.16),
+            borderRadius: BorderRadius.circular(22.r),
+            image: DecorationImage(
+              image: AssetImage(imageString),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        if (!isBean)
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 6.h,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.black.withOpacity(0.6),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(22.r),
+                  bottomLeft: Radius.circular(22.r),
+                ),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/filter.svg',
+                    width: 10.w,
+                  ),
+                  const SizedBox(width: 2),
+                  Text('4.5',
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        fontSize: 10.sp,
+                        color: AppColors.white,
+                      )),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

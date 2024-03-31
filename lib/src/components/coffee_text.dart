@@ -1,41 +1,49 @@
+import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeTitleText extends StatelessWidget {
+  final String text;
   final double size;
 
   const CoffeeTitleText({
     super.key,
-    this.size = 16,
+    this.size = 13,
+    required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Cuppaccino',
+      text,
       maxLines: 1,
       overflow: TextOverflow.fade,
       style: TextStyle(
-        color: const Color(0xFF2F2D2C),
+        color: AppColors.white,
         fontSize: size.sp,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
       ),
     );
   }
 }
 
 class CoffeeSideText extends StatelessWidget {
+  final String text;
+  final double size;
+
   const CoffeeSideText({
     super.key,
+    required this.text,
+    this.size = 9,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'with Chocolate',
+      text,
       style: TextStyle(
-        color: const Color(0xFF9B9B9B),
-        fontSize: 12.sp,
+        color: AppColors.white,
+        fontSize: size.sp,
         fontWeight: FontWeight.w400,
       ),
     );
