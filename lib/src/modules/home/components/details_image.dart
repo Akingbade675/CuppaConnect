@@ -11,12 +11,14 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
   final String image;
   final String name;
   final String type;
+  final bool? isBean;
 
   const CoffeeDetailsImageWidget({
     super.key,
     required this.image,
     required this.name,
     required this.type,
+    this.isBean,
   });
 
   @override
@@ -35,7 +37,11 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: CoffeeDetailsImageOverlay(name: name, type: type),
+            child: CoffeeDetailsImageOverlay(
+              name: name,
+              type: type,
+              isBean: isBean ?? false,
+            ),
           ),
         ],
       ),
@@ -46,11 +52,13 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
 class CoffeeDetailsImageOverlay extends StatelessWidget {
   final String name;
   final String type;
+  final bool isBean;
 
   const CoffeeDetailsImageOverlay({
     super.key,
     required this.name,
     required this.type,
+    this.isBean = false,
   });
 
   @override
@@ -71,26 +79,36 @@ class CoffeeDetailsImageOverlay extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CoffeeTitleText(
-                    text: name,
-                    size: 20,
-                  ),
-                  SizedBox(height: 2.h),
-                  CoffeeSideText(
-                    text: type,
-                    size: 12,
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: CoffeeTitleText(
+                        text: name,
+                        size: 20,
+                      ),
+                    ),
+                    SizedBox(height: 2.h),
+                    CoffeeSideText(
+                      text: type,
+                      size: 12,
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
+              // const Spacer(),
+              SizedBox(width: 15.w),
               _buildCoffeeContentContainer(context,
                   icon: AppIcons.coffee, text: 'Coffee'),
               SizedBox(width: 20.w),
-              _buildCoffeeContentContainer(context,
-                  icon: AppIcons.milk, text: 'Milk'),
+              _buildCoffeeContentContainer(
+                context,
+                icon: isBean ? AppIcons.bean : AppIcons.milk,
+                text: isBean ? 'Africa' : 'Milk',
+              ),
             ],
           ),
           SizedBox(height: 13.h),

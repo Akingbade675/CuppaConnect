@@ -3,6 +3,7 @@ import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/constants/coffees_data.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
+import 'package:coffee_shop_app/src/modules/home/views/coffee_detail_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
@@ -17,45 +18,51 @@ class CoffeeItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: 239.h,
-      width: 150.w,
-      padding: EdgeInsets.all(10.w),
-      decoration: BoxDecoration(
-        gradient: AppColors.linearGradient,
-        borderRadius: BorderRadius.circular(22.r),
-      ),
-      child: Column(
-        children: [
-          CoffeeImageWidget(imageString: data.squareImage, isBean: isBean),
-          Padding(
-            padding: EdgeInsets.all(10.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CoffeeTitleText(text: data.name),
-                SizedBox(height: 5.h),
-                CoffeeSideText(
-                  text: data.type,
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  children: [
-                    PriceWidget(
-                      price: data.prices.values.first,
-                      fontSize: 15,
-                    ),
-                    const Spacer(),
-                    const AppIconButton(
-                      iconPath: AppIcons.plus,
-                      size: 28,
-                    ),
-                  ],
-                ),
-              ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(22.r),
+      onTap: () {
+        context.push(CoffeeDetailScreen(data: data));
+      },
+      child: Container(
+        // height: 239.h,
+        width: 150.w,
+        padding: EdgeInsets.all(10.w),
+        decoration: BoxDecoration(
+          gradient: AppColors.coffeeItemGradient,
+          borderRadius: BorderRadius.circular(22.r),
+        ),
+        child: Column(
+          children: [
+            CoffeeImageWidget(imageString: data.squareImage, isBean: isBean),
+            Padding(
+              padding: EdgeInsets.all(10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CoffeeTitleText(text: data.name),
+                  SizedBox(height: 5.h),
+                  CoffeeSideText(
+                    text: data.type,
+                  ),
+                  SizedBox(height: 8.h),
+                  Row(
+                    children: [
+                      PriceWidget(
+                        price: data.prices.values.first,
+                        fontSize: 15,
+                      ),
+                      const Spacer(),
+                      const AppIconButton(
+                        iconPath: AppIcons.plus,
+                        size: 28,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -19,11 +19,11 @@ class CoffeeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const AAppBar(
+      appBar: AAppBar(
         leadingIcon: AppIcons.back,
         trailingIcon: AppIcons.favourite,
-        iconBgColor: AppColors.black,
-        iconBorderColor: AppColors.black,
+        iconBg: AppColors.iconGradient2,
+        onLeadingPressed: () => context.pop(),
       ),
       body: Column(
         children: [
@@ -36,10 +36,12 @@ class CoffeeDetailScreen extends StatelessWidget {
                     image: data.portraitImage,
                     name: data.name,
                     type: data.type,
+                    isBean: data.name.toLowerCase().contains('bean'),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 20.w,
+                      vertical: 20.h,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,16 +82,29 @@ class CoffeeDetailScreen extends StatelessWidget {
       SizedBox(height: 10.h),
       ReadMoreText(
         text,
-        trimLines: 3,
+        trimLines: 2,
         colorClickableText: AppColors.brown,
         trimMode: TrimMode.Line,
         trimCollapsedText: 'Read More',
-        trimExpandedText: 'Show Less',
-        style: context.textTheme.bodySmall?.copyWith(
+        trimExpandedText: ' Show Less',
+        style: TextStyle(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.white,
+        ),
+        moreStyle: context.textTheme.bodyMedium?.copyWith(
+          fontSize: 12.sp,
+          color: AppColors.brown,
+        ),
+        preDataTextStyle: context.textTheme.bodySmall?.copyWith(
           color: AppColors.grey20,
         ),
-        moreStyle: context.textTheme.bodyLarge?.copyWith(
-          fontSize: 14.sp,
+        postDataTextStyle: context.textTheme.bodySmall?.copyWith(
+          color: AppColors.grey20,
+        ),
+        lessStyle: context.textTheme.bodyMedium?.copyWith(
+          fontSize: 12.sp,
+          color: AppColors.brown,
         ),
       ),
       SizedBox(height: 20.h),
@@ -98,7 +113,13 @@ class CoffeeDetailScreen extends StatelessWidget {
 
   List<Widget> _buildCoffeeSize(BuildContext context,
       {required List<String> sizes}) {
+    bool isBean = true;
+    if (sizes.contains('Small')) {
+      isBean = false;
+      sizes = sizes.map((size) => size.substring(0, 1)).toList();
+    }
     return [
+      SizedBox(height: 8.h),
       Text(
         'Size',
         style: context.textTheme.bodyLarge?.copyWith(
@@ -109,13 +130,12 @@ class CoffeeDetailScreen extends StatelessWidget {
       SizedBox(height: 12.h),
       Row(
         children: List.generate(
-          3,
+          sizes.length,
           (index) {
-            final isSelected = index == 1;
+            final isSelected = index == 0;
             final deviceWidth = MediaQuery.of(context).size.width;
-            final chipWidth = (deviceWidth - 40.w - 24.w * 2) / 3;
+            final chipWidth = (deviceWidth - 60.w - 26.w * 2) / 3;
             return Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 RoundedContainer(
                   size: Size(chipWidth, 40),
@@ -130,12 +150,12 @@ class CoffeeDetailScreen extends StatelessWidget {
                       sizes[index],
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: isSelected ? AppColors.brown : AppColors.grey20,
-                        fontSize: 16.sp,
+                        fontSize: isBean ? 12.sp : 16.sp,
                       ),
                     ),
                   ),
                 ),
-                if (index != 2) SizedBox(width: 24.w),
+                if (index < sizes.length) SizedBox(width: 24.w),
               ],
             );
           },

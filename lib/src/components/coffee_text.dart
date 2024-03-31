@@ -17,7 +17,7 @@ class CoffeeTitleText extends StatelessWidget {
     return Text(
       text,
       maxLines: 1,
-      overflow: TextOverflow.fade,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: AppColors.white,
         fontSize: size.sp,

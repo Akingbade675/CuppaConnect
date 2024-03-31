@@ -38,4 +38,5 @@ class AppIcons {
   static const coffee = '${_prefix}coffee.svg';
   static const milk = '${_prefix}milk.svg';
   static const star = '${_prefix}star.svg';
+  static const location = '${_prefix}location.svg';
 }

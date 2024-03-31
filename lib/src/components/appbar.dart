@@ -10,17 +10,19 @@ class AAppBar extends StatelessWidget implements PreferredSize {
   final String leadingIcon;
   final String? trailingIcon;
   final String? trailingImage;
-  final Color? iconBgColor;
-  final Color? iconBorderColor;
+  final Gradient iconBg;
+  final VoidCallback? onLeadingPressed;
+  final VoidCallback? onTrailingPressed;
 
   const AAppBar({
     super.key,
     this.title,
     required this.leadingIcon,
+    required this.iconBg,
     this.trailingIcon,
     this.trailingImage,
-    this.iconBgColor,
-    this.iconBorderColor,
+    this.onLeadingPressed,
+    this.onTrailingPressed,
   }) : assert(
           trailingIcon != null || trailingImage != null,
           'trailingIcon or trailingImage must be provided',
@@ -42,8 +44,9 @@ class AAppBar extends StatelessWidget implements PreferredSize {
       leading: Padding(
         padding: EdgeInsets.only(left: 30.w, top: 12.h, bottom: 12.h),
         child: AppBarIconContainer(
+          onTap: onLeadingPressed,
           icon: leadingIcon,
-          bgColor: iconBgColor,
+          gradient: iconBg,
         ),
       ),
       actions: [
@@ -58,7 +61,11 @@ class AAppBar extends StatelessWidget implements PreferredSize {
                     height: 30.h,
                   ),
                 )
-              : AppBarIconContainer(icon: trailingIcon!, bgColor: iconBgColor),
+              : AppBarIconContainer(
+                  icon: trailingIcon!,
+                  gradient: iconBg,
+                  onTap: onTrailingPressed,
+                ),
         ),
       ],
     );
@@ -73,33 +80,35 @@ class AAppBar extends StatelessWidget implements PreferredSize {
 
 class AppBarIconContainer extends StatelessWidget {
   final String icon;
-  final Color? bgColor;
-  final Color? borderColor;
+  final Gradient gradient;
+  final VoidCallback? onTap;
 
   const AppBarIconContainer({
     super.key,
     required this.icon,
-    this.bgColor,
-    this.borderColor,
+    required this.gradient,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 33.h,
-      width: 33.w,
-      padding: EdgeInsets.all(7.5.r),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: borderColor ?? AppColors.gradientGrey,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 30.h,
+        width: 30.h,
+        padding: EdgeInsets.all(6.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(
+            color: AppColors.iconGrey,
+          ),
+          gradient: gradient,
         ),
-        color: bgColor,
-        gradient: bgColor == null ? AppColors.linearGradient : null,
-      ),
-      child: SvgIcon(
-        icon,
-        color: AppColors.white.withOpacity(0.18),
+        child: SvgIcon(
+          icon,
+          color: AppColors.white.withOpacity(0.18),
+        ),
       ),
     );
   }

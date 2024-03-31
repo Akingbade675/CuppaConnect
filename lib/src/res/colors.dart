@@ -12,16 +12,47 @@ class AppColors {
   static const grey50 = Color(0xFF52555A);
   static const grey20 = Color(0xFFAEAEAE);
   static const bgGrey = Color(0xFF141921);
-  static const gradientGrey = Color(0xFF262B33);
+  static const containerGrey = Color(0xFF262B33);
+  static const iconGrey = Color(0xFF21262E);
 
   // -- Gradients
-  static final Gradient linearGradient = LinearGradient(
+  static final Gradient coffeeItemGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     // stops: const [0.0, 1.0],
     colors: [
-      AppColors.gradientGrey,
-      AppColors.gradientGrey.withOpacity(0.0),
+      AppColors.grey100, // #252A32
+      AppColors.containerGrey.withOpacity(0.0), // #262B33
+    ],
+  );
+
+  static final Gradient cartItemGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    // stops: const [0.0, 1.0],
+    colors: [
+      AppColors.containerGrey, // #262B33
+      AppColors.containerGrey.withOpacity(0.0),
+    ],
+  );
+
+  static final Gradient iconGradient1 = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    // stops: const [0.0, 1.0],
+    colors: [
+      AppColors.iconGrey, // #21262E
+      AppColors.iconGrey.withOpacity(0.0),
+    ],
+  );
+
+  static const Gradient iconGradient2 = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    // stops: const [0.0, 1.0],
+    colors: [
+      AppColors.iconGrey, // #21262E
+      AppColors.black, // #0C0F14
     ],
   );
 }

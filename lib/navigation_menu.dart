@@ -1,5 +1,4 @@
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
-import 'package:coffee_shop_app/src/modules/home/views/coffee_detail_screen.dart';
 import 'package:coffee_shop_app/src/modules/home/views/home_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
@@ -21,8 +20,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
       };
 
   List<Widget> get _screens => [
-        // const HomeScreen(),
-        const CoffeeDetailScreen(),
+        const HomeScreen(),
         const SizedBox(),
         const SizedBox(),
         const SizedBox(),
