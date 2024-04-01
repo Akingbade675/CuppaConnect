@@ -61,7 +61,11 @@ class CoffeeDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          PriceAndAddToCartWidget(price: data.prices.values.first),
+          PageBottomPrice(
+            text: 'Price',
+            btnText: 'Add to Cart',
+            price: data.prices.values.first,
+          ),
         ],
       ),
     );
@@ -135,17 +139,17 @@ class CoffeeDetailScreen extends StatelessWidget {
             final isSelected = index == 0;
             final deviceWidth = MediaQuery.of(context).size.width;
             final chipWidth = (deviceWidth - 60.w - 26.w * 2) / 3;
-            return Row(
-              children: [
-                RoundedContainer(
-                  size: Size(chipWidth, 40),
-                  border: isSelected
-                      ? Border.all(
-                          color: AppColors.brown,
-                          width: 2,
-                        )
-                      : null,
-                  child: Center(
+            return Expanded(
+              child: Row(
+                children: [
+                  RoundedContainer(
+                    size: Size(chipWidth, 40),
+                    border: isSelected
+                        ? Border.all(
+                            color: AppColors.brown,
+                            width: 2,
+                          )
+                        : null,
                     child: Text(
                       sizes[index],
                       style: context.textTheme.bodyMedium?.copyWith(
@@ -154,9 +158,9 @@ class CoffeeDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                if (index < sizes.length) SizedBox(width: 24.w),
-              ],
+                  if (index < sizes.length) SizedBox(width: 24.w),
+                ],
+              ),
             );
           },
         ),

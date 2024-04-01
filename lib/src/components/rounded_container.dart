@@ -3,28 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoundedContainer extends StatelessWidget {
-  final Size size;
+  final Size? size;
   final Border? border;
+  final Gradient? gradient;
+  final double padding;
+  final double borderRadius;
+  final Color color;
   final Widget child;
 
   const RoundedContainer({
     super.key,
     required this.child,
-    required this.size,
+    this.size,
     this.border,
+    this.gradient,
+    this.borderRadius = 10,
+    this.padding = 8,
+    this.color = AppColors.bgGrey,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: size.width.w,
-      height: size.height.h,
-      padding: EdgeInsets.all(8.w),
+      width: size?.width.w,
+      height: size?.height.h,
+      padding: EdgeInsets.all(padding.w),
       decoration: BoxDecoration(
-        color: AppColors.bgGrey,
-        borderRadius: BorderRadius.circular(10.w),
+        color: color,
+        borderRadius: BorderRadius.circular(borderRadius.w),
         border: border,
+        gradient: gradient,
       ),
       child: child,
     );

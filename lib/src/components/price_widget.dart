@@ -23,7 +23,7 @@ class PriceWidget extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: price.toString(),
+            text: price.toStringAsFixed(2),
             style: context.textTheme.bodyLarge?.copyWith(
               fontSize: fontSize.sp,
             ),

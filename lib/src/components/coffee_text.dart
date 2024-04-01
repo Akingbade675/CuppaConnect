@@ -30,19 +30,20 @@ class CoffeeTitleText extends StatelessWidget {
 class CoffeeSideText extends StatelessWidget {
   final String text;
   final double size;
+  final Color color;
 
-  const CoffeeSideText({
-    super.key,
-    required this.text,
-    this.size = 9,
-  });
+  const CoffeeSideText(
+      {super.key,
+      required this.text,
+      this.size = 9,
+      this.color = AppColors.white});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
-        color: AppColors.white,
+        color: color,
         fontSize: size.sp,
         fontWeight: FontWeight.w400,
       ),

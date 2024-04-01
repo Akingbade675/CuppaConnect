@@ -5,12 +5,18 @@ import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PriceAndAddToCartWidget extends StatelessWidget {
+class PageBottomPrice extends StatelessWidget {
+  final String text;
+  final String btnText;
   final double price;
+  final VoidCallback? onBtnPressed;
 
-  const PriceAndAddToCartWidget({
+  const PageBottomPrice({
     super.key,
     required this.price,
+    required this.text,
+    required this.btnText,
+    this.onBtnPressed,
   });
 
   @override
@@ -26,7 +32,7 @@ class PriceAndAddToCartWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Price',
+                text,
                 style: context.textTheme.bodyMedium?.copyWith(
                   fontSize: 12.sp,
                   color: AppColors.grey20,
@@ -54,7 +60,7 @@ class PriceAndAddToCartWidget extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Add to Cart',
+              btnText,
               style: context.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),

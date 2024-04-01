@@ -101,12 +101,15 @@ class CoffeeDetailsImageOverlay extends StatelessWidget {
               ),
               // const Spacer(),
               SizedBox(width: 15.w),
-              _buildCoffeeContentContainer(context,
-                  icon: AppIcons.coffee, text: 'Coffee'),
+              _buildCoffeeContentContainer(
+                context,
+                icon: isBean ? AppIcons.bean : AppIcons.coffee,
+                text: isBean ? 'Bean' : 'Coffee',
+              ),
               SizedBox(width: 20.w),
               _buildCoffeeContentContainer(
                 context,
-                icon: isBean ? AppIcons.bean : AppIcons.milk,
+                icon: isBean ? AppIcons.location : AppIcons.milk,
                 text: isBean ? 'Africa' : 'Milk',
               ),
             ],

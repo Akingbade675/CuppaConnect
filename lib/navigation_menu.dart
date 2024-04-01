@@ -1,4 +1,5 @@
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
+import 'package:coffee_shop_app/src/modules/cart/views/cart_screen.dart';
 import 'package:coffee_shop_app/src/modules/home/views/home_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
@@ -21,12 +22,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> get _screens => [
         const HomeScreen(),
-        const SizedBox(),
+        const CartScreen(),
         const SizedBox(),
         const SizedBox(),
       ];
 
-  int index = 0;
+  int index = 1;
 
   @override
   Widget build(BuildContext context) {
