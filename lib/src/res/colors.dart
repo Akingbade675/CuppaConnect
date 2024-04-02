@@ -55,4 +55,14 @@ class AppColors {
       AppColors.black, // #0C0F14
     ],
   );
+
+  static const Gradient paymentCardGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    // stops: const [0.0, 1.0],
+    colors: [
+      AppColors.containerGrey, // #262B33
+      AppColors.black, // #0C0F14
+    ],
+  );
 }

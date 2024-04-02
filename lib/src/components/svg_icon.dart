@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 class SvgIcon extends StatelessWidget {
   final String icon;
   final double size;
+  final double? width;
+  final double? height;
   final Color color;
 
   const SvgIcon(
@@ -12,14 +14,16 @@ class SvgIcon extends StatelessWidget {
     super.key,
     this.size = 24,
     required this.color,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       icon,
-      width: size.w,
-      height: size.h,
+      width: width?.w ?? size.w,
+      height: height?.h ?? size.h,
       colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
     );
   }

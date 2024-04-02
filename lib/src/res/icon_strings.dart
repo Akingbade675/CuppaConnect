@@ -40,4 +40,7 @@ class AppIcons {
   static const star = '${_prefix}star.svg';
   static const location = '${_prefix}location.svg';
   static const bean = '${_prefix}bean.svg';
+
+  static const card = '${_prefix}card.svg';
+  static const wallet = '${_prefix}wallet.svg';
 }
