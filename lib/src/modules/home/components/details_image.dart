@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/src/components/appbar.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
@@ -5,32 +6,42 @@ import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeDetailsImageWidget extends StatelessWidget {
   final String image;
   final String name;
+  final double? height;
+  final BorderRadius? borderRadius;
   final String type;
-  final bool? isBean;
+  final bool isBean;
+  final bool showFavouriteIcon;
 
   const CoffeeDetailsImageWidget({
     super.key,
     required this.image,
     required this.name,
     required this.type,
-    this.isBean,
+    this.isBean = false,
+    this.borderRadius,
+    this.showFavouriteIcon = false,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.56,
+      height: height?.h ?? MediaQuery.of(context).size.height * 0.56,
       child: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: borderRadius ?? BorderRadius.circular(0),
+              child: Image.asset(
+                image,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
@@ -40,9 +51,20 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
             child: CoffeeDetailsImageOverlay(
               name: name,
               type: type,
-              isBean: isBean ?? false,
+              isBean: isBean,
             ),
           ),
+          if (showFavouriteIcon)
+            Positioned(
+              right: 20.w,
+              top: 26.h,
+              child: AppBarIconContainer(
+                icon: AppIcons.favourite,
+                color: AppColors.red,
+                gradient: AppColors.iconGradient2,
+                onTap: () {},
+              ),
+            ),
         ],
       ),
     );

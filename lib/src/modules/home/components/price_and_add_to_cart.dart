@@ -1,6 +1,5 @@
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
-import 'package:coffee_shop_app/src/modules/order/views/order_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,13 +43,7 @@ class PageBottomPrice extends StatelessWidget {
           ),
           const Spacer(),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const OrderScreen(),
-                ),
-              );
-            },
+            onPressed: onBtnPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.brown,
               elevation: 0,

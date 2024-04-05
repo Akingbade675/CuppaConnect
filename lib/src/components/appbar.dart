@@ -9,6 +9,7 @@ class AAppBar extends StatelessWidget implements PreferredSize {
   final String? title;
   final String leadingIcon;
   final String? trailingIcon;
+  final Color? trailingColor;
   final String? trailingImage;
   final Gradient iconBg;
   final VoidCallback? onLeadingPressed;
@@ -23,10 +24,12 @@ class AAppBar extends StatelessWidget implements PreferredSize {
     this.trailingImage,
     this.onLeadingPressed,
     this.onTrailingPressed,
-  }) : assert(
-          trailingIcon != null || trailingImage != null,
-          'trailingIcon or trailingImage must be provided',
-        );
+    this.trailingColor,
+  });
+  // : assert(
+  //         trailingIcon != null || trailingImage != null,
+  //         'trailingIcon or trailingImage must be provided',
+  //       );
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +64,14 @@ class AAppBar extends StatelessWidget implements PreferredSize {
                     height: 30.h,
                   ),
                 )
-              : AppBarIconContainer(
-                  icon: trailingIcon!,
-                  gradient: iconBg,
-                  onTap: onTrailingPressed,
-                ),
+              : trailingImage != null
+                  ? AppBarIconContainer(
+                      icon: trailingIcon!,
+                      color: trailingColor ?? AppColors.white18,
+                      gradient: iconBg,
+                      onTap: onTrailingPressed,
+                    )
+                  : null,
         ),
       ],
     );
@@ -80,12 +86,14 @@ class AAppBar extends StatelessWidget implements PreferredSize {
 
 class AppBarIconContainer extends StatelessWidget {
   final String icon;
+  final Color color;
   final Gradient gradient;
   final VoidCallback? onTap;
 
   const AppBarIconContainer({
     super.key,
     required this.icon,
+    this.color = AppColors.white18,
     required this.gradient,
     this.onTap,
   });
@@ -107,7 +115,7 @@ class AppBarIconContainer extends StatelessWidget {
         ),
         child: SvgIcon(
           icon,
-          color: AppColors.white.withOpacity(0.18),
+          color: color,
         ),
       ),
     );

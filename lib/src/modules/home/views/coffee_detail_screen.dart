@@ -1,4 +1,5 @@
 import 'package:coffee_shop_app/src/components/appbar.dart';
+import 'package:coffee_shop_app/src/components/coffee_description.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/constants/coffees_data.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
@@ -8,7 +9,6 @@ import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:readmore/readmore.dart';
 
 class CoffeeDetailScreen extends StatelessWidget {
   final Coffee data;
@@ -46,7 +46,7 @@ class CoffeeDetailScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ..._buildCoffeeDescription(
+                        ...buildCoffeeDescription(
                           context,
                           text: data.description,
                         ),
@@ -71,50 +71,6 @@ class CoffeeDetailScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildCoffeeDescription(
-    BuildContext context, {
-    required String text,
-  }) {
-    return [
-      Text(
-        'Description',
-        style: context.textTheme.bodyLarge?.copyWith(
-          fontSize: 14.sp,
-          color: AppColors.grey20,
-        ),
-      ),
-      SizedBox(height: 10.h),
-      ReadMoreText(
-        text,
-        trimLines: 2,
-        colorClickableText: AppColors.brown,
-        trimMode: TrimMode.Line,
-        trimCollapsedText: 'Read More',
-        trimExpandedText: ' Show Less',
-        style: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
-          color: AppColors.white,
-        ),
-        moreStyle: context.textTheme.bodyMedium?.copyWith(
-          fontSize: 12.sp,
-          color: AppColors.brown,
-        ),
-        preDataTextStyle: context.textTheme.bodySmall?.copyWith(
-          color: AppColors.grey20,
-        ),
-        postDataTextStyle: context.textTheme.bodySmall?.copyWith(
-          color: AppColors.grey20,
-        ),
-        lessStyle: context.textTheme.bodyMedium?.copyWith(
-          fontSize: 12.sp,
-          color: AppColors.brown,
-        ),
-      ),
-      SizedBox(height: 20.h),
-    ];
-  }
-
   List<Widget> _buildCoffeeSize(BuildContext context,
       {required List<String> sizes}) {
     bool isBean = true;
@@ -123,7 +79,7 @@ class CoffeeDetailScreen extends StatelessWidget {
       sizes = sizes.map((size) => size.substring(0, 1)).toList();
     }
     return [
-      SizedBox(height: 8.h),
+      SizedBox(height: 28.h),
       Text(
         'Size',
         style: context.textTheme.bodyLarge?.copyWith(

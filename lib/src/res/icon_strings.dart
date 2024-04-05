@@ -43,4 +43,5 @@ class AppIcons {
 
   static const card = '${_prefix}card.svg';
   static const wallet = '${_prefix}wallet.svg';
+  static const visa = '${_prefix}visa.svg';
 }

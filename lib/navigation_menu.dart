@@ -1,5 +1,6 @@
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
 import 'package:coffee_shop_app/src/modules/cart/views/cart_screen.dart';
+import 'package:coffee_shop_app/src/modules/favourite/views/favourite_screen.dart';
 import 'package:coffee_shop_app/src/modules/home/views/home_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
@@ -23,7 +24,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List<Widget> get _screens => [
         const HomeScreen(),
         const CartScreen(),
-        const SizedBox(),
+        const FavouriteScreen(),
         const SizedBox(),
       ];
 

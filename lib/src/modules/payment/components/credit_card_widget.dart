@@ -35,87 +35,90 @@ class CreditCardWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.h),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w).copyWith(
-              top: 15.h,
-              bottom: 10.h,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.w),
-              gradient: AppColors.paymentCardGradient,
-            ),
-            child: Column(
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgIcon(
-                      AppIcons.card,
-                      color: AppColors.brown,
-                      width: 31,
-                      height: 24,
-                    ),
-                    SvgIcon(
-                      AppIcons.wallet,
-                      color: AppColors.white,
-                      width: 50,
-                      height: 17,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 34.h),
-                Text(
-                  '3897 8923 6745 4638',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontSize: 14.sp,
-                    letterSpacing: 2,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w).copyWith(
+                top: 15.h,
+                bottom: 10.h,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.w),
+                gradient: AppColors.paymentCardGradient,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgIcon(
+                        AppIcons.card,
+                        color: AppColors.brown,
+                        width: 31,
+                        height: 24,
+                      ),
+                      SvgIcon(
+                        AppIcons.visa,
+                        color: AppColors.white,
+                        width: 50,
+                        height: 17,
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 40.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Card Holder Name',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 10.sp,
-                            color: AppColors.white,
-                          ),
-                        ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          'John Doe',
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ],
+                  Flexible(child: SizedBox(height: 34.h)),
+                  Text(
+                    '3897 8923 6745 4638',
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontSize: 14.sp,
+                      letterSpacing: 6.w,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Expiry Date',
-                          style: context.textTheme.bodySmall?.copyWith(
-                            fontSize: 10.sp,
-                            color: AppColors.white,
+                  ),
+                  // Flexible(child: SizedBox(height: 37.h)),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Card Holder Name',
+                            style: context.textTheme.bodySmall?.copyWith(
+                              fontSize: 10.sp,
+                              color: AppColors.white,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          '12 / 24',
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            fontSize: 14.sp,
+                          Text(
+                            'John Doe',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Expiry Date',
+                            style: context.textTheme.bodySmall?.copyWith(
+                              fontSize: 10.sp,
+                              color: AppColors.white,
+                            ),
+                          ),
+                          Text(
+                            '12 / 24',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           )
         ],

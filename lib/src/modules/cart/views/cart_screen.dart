@@ -1,7 +1,9 @@
 import 'package:coffee_shop_app/src/components/appbar.dart';
+import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/cart/components/multiple_variation_cart_item.dart';
 import 'package:coffee_shop_app/src/modules/cart/components/single_variation_cart_item.dart';
 import 'package:coffee_shop_app/src/modules/home/components/price_and_add_to_cart.dart';
+import 'package:coffee_shop_app/src/modules/payment/views/payment_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:coffee_shop_app/src/res/image_strings.dart';
@@ -34,10 +36,11 @@ class CartScreen extends StatelessWidget {
               },
             ),
           ),
-          const PageBottomPrice(
+          PageBottomPrice(
             price: 10.40,
             text: 'Total Price',
             btnText: 'Pay',
+            onBtnPressed: () => context.push(const PaymentScreen()),
           ),
         ],
       ),

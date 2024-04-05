@@ -5,6 +5,8 @@ class AppColors {
   static const transparent = Colors.transparent;
   static const dark = 0xFF1C1C1C;
   static const white = Color(0xFFFFFFFF);
+  static const red = Color(0xFFDC3535);
+  static const white18 = Color.fromRGBO(255, 255, 255, 0.18);
   static const brownn = Color(0xFFC67C4E);
   static const brown = Color(0xFFD17842);
   static const lightBrown = Color(0xFFFFF5EE);
