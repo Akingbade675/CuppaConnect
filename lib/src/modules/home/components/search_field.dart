@@ -29,15 +29,10 @@ class SearchField extends StatelessWidget {
           ),
           SizedBox(width: 18.w),
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                enabled: true,
-                contentPadding: EdgeInsets.only(bottom: 19.h),
-                hintText: 'Find Your Coffee...',
-                hintStyle: context.textTheme.bodySmall?.copyWith(
-                  fontSize: 10.sp,
-                ),
-                border: InputBorder.none,
+            child: Text(
+              'Find Your Coffee...',
+              style: context.textTheme.bodySmall?.copyWith(
+                fontSize: 10.sp,
               ),
             ),
           ),

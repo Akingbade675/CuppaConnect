@@ -9,7 +9,7 @@ class PriceWidget extends StatelessWidget {
   const PriceWidget({
     super.key,
     required this.price,
-    required this.fontSize,
+    this.fontSize = 16,
   });
 
   @override

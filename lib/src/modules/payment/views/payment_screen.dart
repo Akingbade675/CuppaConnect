@@ -35,9 +35,10 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AAppBar(
+        title: 'Payment',
         leadingIcon: AppIcons.back,
         iconBg: AppColors.iconGradient1,
-        title: 'Payment',
+        onLeadingPressed: () => context.pop(),
       ),
       body: Column(
         children: [

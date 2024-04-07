@@ -42,20 +42,25 @@ class PageBottomPrice extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          ElevatedButton(
-            onPressed: onBtnPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.brown,
-              elevation: 0,
-              minimumSize: Size(240.w, 60.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.r),
+          SizedBox(
+            height: 60.h,
+            child: ElevatedButton(
+              onPressed: onBtnPressed ?? () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.brown,
+                elevation: 0,
+                minimumSize: Size(240.w, 60.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
               ),
-            ),
-            child: Text(
-              btnText,
-              style: context.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+              child: FittedBox(
+                child: Text(
+                  btnText,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ),

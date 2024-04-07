@@ -2,6 +2,7 @@ import 'package:coffee_shop_app/src/components/svg_icon.dart';
 import 'package:coffee_shop_app/src/modules/cart/views/cart_screen.dart';
 import 'package:coffee_shop_app/src/modules/favourite/views/favourite_screen.dart';
 import 'package:coffee_shop_app/src/modules/home/views/home_screen.dart';
+import 'package:coffee_shop_app/src/modules/order/views/order_history_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class _NavigationMenuState extends State<NavigationMenu> {
         const HomeScreen(),
         const CartScreen(),
         const FavouriteScreen(),
-        const SizedBox(),
+        const OrderHistoryScreen(),
       ];
 
-  int index = 1;
+  int index = 3;
 
   @override
   Widget build(BuildContext context) {
