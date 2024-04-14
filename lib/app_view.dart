@@ -29,7 +29,7 @@ class _AppViewState extends State<AppView> {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.dark,
           darkTheme: AppThemes.dark,
-          home: const NavigationMenu(),
+          home: NavigationMenu(),
         );
       },
     );

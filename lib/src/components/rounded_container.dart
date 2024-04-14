@@ -10,6 +10,7 @@ class RoundedContainer extends StatelessWidget {
   final double borderRadius;
   final Color color;
   final Widget child;
+  final VoidCallback? onTap;
 
   const RoundedContainer({
     super.key,
@@ -20,22 +21,27 @@ class RoundedContainer extends StatelessWidget {
     this.borderRadius = 10,
     this.padding = 8,
     this.color = AppColors.bgGrey,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: size?.width.w,
-      height: size?.height.h,
-      padding: EdgeInsets.all(padding.w),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(borderRadius.w),
-        border: border,
-        gradient: gradient,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(borderRadius.w),
+      child: Container(
+        alignment: Alignment.center,
+        width: size?.width.w,
+        height: size?.height.h,
+        padding: EdgeInsets.all(padding.w),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(borderRadius.w),
+          border: border,
+          gradient: gradient,
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }

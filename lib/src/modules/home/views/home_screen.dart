@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const CoffeeTypesSection(),
+            CoffeeTypesSection(),
             const CoffeeBeansSection(),
           ],
         ),

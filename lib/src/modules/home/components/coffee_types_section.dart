@@ -1,14 +1,16 @@
-import 'package:coffee_shop_app/src/constants/coffees_data.dart';
+import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/home/components/coffee_item_card.dart';
+import 'package:coffee_shop_app/src/modules/home/components/tab_indicator.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeTypesSection extends StatelessWidget {
-  const CoffeeTypesSection({super.key});
+  CoffeeTypesSection({super.key});
 
   final coffeeTypes = CoffeeData.coffeeTypes;
+  final coffeeItems = CoffeeData.getCoffeeItems();
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +46,14 @@ class CoffeeTypesSection extends StatelessWidget {
                 children: List.generate(
                   coffeeTypes.length,
                   (tabIndex) {
-                    final coffees = Coffee.getCoffees(coffeeTypes[tabIndex]);
+                    final coffees = coffeeItems[coffeeTypes[tabIndex]]!;
                     return ListView.separated(
                       padding: EdgeInsets.only(right: 22.w),
                       shrinkWrap: true,
                       itemCount: coffees.length,
                       scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) =>
-                          SizedBox(width: 22.w),
-                      itemBuilder: (context, itemIndex) {
+                      separatorBuilder: (ctx, idx) => SizedBox(width: 22.w),
+                      itemBuilder: (ctx, itemIndex) {
                         return CoffeeItemCard(data: coffees[itemIndex]);
                       },
                     );
@@ -64,33 +65,5 @@ class CoffeeTypesSection extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CircleTabIndicator extends Decoration {
-  final double radius;
-  final Color color;
-
-  const CircleTabIndicator({required this.radius, required this.color});
-
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CirclePainter(this);
-  }
-}
-
-class _CirclePainter extends BoxPainter {
-  final CircleTabIndicator decoration;
-
-  _CirclePainter(this.decoration);
-
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration cfg) {
-    final Offset circleOffset = offset +
-        Offset(cfg.size!.width / 2, cfg.size!.height - decoration.radius);
-    final Paint paint = Paint()
-      ..color = decoration.color
-      ..isAntiAlias = true;
-    canvas.drawCircle(circleOffset, decoration.radius, paint);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cart_repository/cart_repository.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/modules/cart/components/single_variation_cart_qty_picker.dart';
@@ -6,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SingleVariationCartItem extends StatelessWidget {
-  const SingleVariationCartItem({super.key});
+  final CartItem item;
+
+  const SingleVariationCartItem({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class SingleVariationCartItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16.w),
                 child: Image.asset(
-                  'assets/coffee_assets/americano/square/americano_pic_2_square.png',
+                  item.image,
                   fit: BoxFit.cover,
                   width: 126.w,
                   height: 126.h,
@@ -34,19 +37,14 @@ class SingleVariationCartItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CoffeeTitleText(
-                        text: 'Robusta Coffee Beans', size: 16),
+                    CoffeeTitleText(text: item.name, size: 16),
                     SizedBox(height: 4.h),
-                    const CoffeeSideText(
-                      text: 'From Africa',
+                    CoffeeSideText(
+                      text: item.type,
                       color: AppColors.grey20,
                     ),
                     SizedBox(height: 8.h),
-                    const SingleVariationCartQuantityPicker(
-                      text: '250gm',
-                      price: 7.90,
-                      quantity: 1,
-                    ),
+                    SingleVariationCartQuantityPicker(item),
                   ],
                 ),
               ),

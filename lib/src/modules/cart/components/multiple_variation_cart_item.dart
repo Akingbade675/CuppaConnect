@@ -1,3 +1,4 @@
+import 'package:cart_repository/cart_repository.dart' show CartItem;
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
@@ -7,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MultipleVariationCartItem extends StatelessWidget {
+  final CartItem item;
+
   const MultipleVariationCartItem({
     super.key,
+    required this.item,
   });
 
   @override
@@ -25,7 +29,7 @@ class MultipleVariationCartItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16.w),
                 child: Image.asset(
-                  'assets/coffee_assets/latte/square/latte_pic_1_square.png',
+                  item.image,
                   fit: BoxFit.cover,
                   width: 100.w,
                   height: 100.h,
@@ -37,10 +41,10 @@ class MultipleVariationCartItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CoffeeTitleText(text: 'Cappuccino', size: 16),
+                    CoffeeTitleText(text: item.name, size: 16),
                     SizedBox(height: 4.h),
-                    const CoffeeSideText(
-                      text: 'With Steamed Milk',
+                    CoffeeSideText(
+                      text: item.type,
                       color: AppColors.grey20,
                     ),
                     SizedBox(height: 12.h),
@@ -60,22 +64,22 @@ class MultipleVariationCartItem extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-          const MultiVariationCartQuantityPicker(
-            text: 'S',
-            price: 4.20,
-            quantity: 1,
-          ),
-          SizedBox(height: 8.h),
-          const MultiVariationCartQuantityPicker(
-            text: 'M',
-            price: 4.20,
-            quantity: 1,
-          ),
-          SizedBox(height: 8.h),
-          const MultiVariationCartQuantityPicker(
-            text: 'L',
-            price: 4.20,
-            quantity: 1,
+          ListView.separated(
+            itemBuilder: (context, index) {
+              final cartItemSizes = item.sizes;
+              cartItemSizes.sort((a, b) {
+                return a.name.codeUnitAt(0).compareTo(b.name.codeUnitAt(0));
+              });
+              return MultiVariationCartQuantityPicker(
+                coffeeId: item.coffeeId,
+                size: cartItemSizes[index],
+              );
+            },
+            separatorBuilder: (_, __) => SizedBox(height: 8.h),
+            itemCount: item.sizes.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
           ),
         ],
       ),

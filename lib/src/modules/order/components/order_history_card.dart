@@ -18,6 +18,7 @@ class OrderHistoryCard extends StatelessWidget {
       borderRadius: 23,
       gradient: AppColors.cartItemGradient,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,7 +44,8 @@ class OrderHistoryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 8.w),
+              // SizedBox(width: 8.w),
+              // const Spacer(),
               const PriceWidget(price: 37.20, fontSize: 20),
             ],
           ),

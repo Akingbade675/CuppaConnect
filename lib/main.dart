@@ -1,3 +1,4 @@
+import 'package:cart_repository/cart_repository.dart';
 import 'package:coffee_shop_app/app.dart';
 import 'package:coffee_shop_app/src/utils/bloc_observer/bloc_observer.dart';
 import 'package:flutter/material.dart';
@@ -10,5 +11,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Bloc.observer = AppBlocObserver();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  await LocalCartRepository.init();
   runApp(const MyApp());
 }

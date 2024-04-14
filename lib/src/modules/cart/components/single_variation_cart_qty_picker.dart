@@ -1,26 +1,23 @@
+import 'package:cart_repository/cart_repository.dart' as cart;
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
+import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SingleVariationCartQuantityPicker extends StatelessWidget {
-  final String text;
-  final double price;
-  final int quantity;
+  final cart.CartItem item;
 
-  const SingleVariationCartQuantityPicker({
-    super.key,
-    required this.text,
-    required this.price,
-    required this.quantity,
-  });
+  const SingleVariationCartQuantityPicker(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final size = item.sizes.first;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -33,7 +30,7 @@ class SingleVariationCartQuantityPicker extends StatelessWidget {
               color: AppColors.black,
               child: FittedBox(
                 child: Text(
-                  text,
+                  size.name,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: AppColors.white,
                     fontSize: 16.sp,
@@ -41,7 +38,7 @@ class SingleVariationCartQuantityPicker extends StatelessWidget {
                 ),
               ),
             ),
-            PriceWidget(price: price, fontSize: 18),
+            PriceWidget(price: size.price, fontSize: 18),
           ],
         ),
         SizedBox(height: 8.h),
@@ -49,7 +46,16 @@ class SingleVariationCartQuantityPicker extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const AppIconButton(iconPath: AppIcons.minus, size: 28),
+            AppIconButton(
+              size: 28,
+              iconPath: AppIcons.minus,
+              onPressed: () => context.read<CartItemBloc>().add(
+                    CartItemIncrement(
+                      coffeeId: item.coffeeId,
+                      size: size,
+                    ),
+                  ),
+            ),
             RoundedContainer(
               padding: 0,
               borderRadius: 7,
@@ -58,7 +64,7 @@ class SingleVariationCartQuantityPicker extends StatelessWidget {
               border: Border.all(color: AppColors.brown),
               child: FittedBox(
                 child: Text(
-                  quantity.toString(),
+                  size.quantity.toString(),
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: AppColors.white,
                     fontSize: 16.sp,
@@ -66,9 +72,15 @@ class SingleVariationCartQuantityPicker extends StatelessWidget {
                 ),
               ),
             ),
-            const AppIconButton(
-              iconPath: AppIcons.plus,
+            AppIconButton(
               size: 28,
+              iconPath: AppIcons.plus,
+              onPressed: () => context.read<CartItemBloc>().add(
+                    CartItemDecrement(
+                      coffeeId: item.coffeeId,
+                      size: size,
+                    ),
+                  ),
             ),
           ],
         ),

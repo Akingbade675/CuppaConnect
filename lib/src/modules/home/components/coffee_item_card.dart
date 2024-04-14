@@ -1,20 +1,21 @@
+import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
-import 'package:coffee_shop_app/src/constants/coffees_data.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
+import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
 import 'package:coffee_shop_app/src/modules/home/views/coffee_detail_screen.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeItemCard extends StatelessWidget {
-  final Coffee data;
-  final bool isBean;
+  final CoffeeItem data;
 
-  const CoffeeItemCard({super.key, required this.data, this.isBean = false});
+  const CoffeeItemCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class CoffeeItemCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            CoffeeImageWidget(imageString: data.squareImage, isBean: isBean),
+            CoffeeImageWidget(
+                imageString: data.squareImage, isBean: data.isBean),
             Padding(
               padding: EdgeInsets.all(10.w),
               child: Column(
@@ -48,13 +50,16 @@ class CoffeeItemCard extends StatelessWidget {
                   Row(
                     children: [
                       PriceWidget(
-                        price: data.prices.values.first,
+                        price: data.sizes.first.price,
                         fontSize: 15,
                       ),
                       const Spacer(),
-                      const AppIconButton(
-                        iconPath: AppIcons.plus,
+                      AppIconButton(
                         size: 28,
+                        iconPath: AppIcons.plus,
+                        onPressed: () => context.read<CartItemBloc>().add(
+                              CartItemAdd(data, data.sizes.first),
+                            ),
                       ),
                     ],
                   ),
@@ -116,11 +121,13 @@ class CoffeeImageWidget extends StatelessWidget {
                     width: 10.w,
                   ),
                   const SizedBox(width: 2),
-                  Text('4.5',
-                      style: context.textTheme.bodyLarge?.copyWith(
-                        fontSize: 10.sp,
-                        color: AppColors.white,
-                      )),
+                  Text(
+                    '4.5',
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontSize: 10.sp,
+                      color: AppColors.white,
+                    ),
+                  ),
                 ],
               ),
             ),

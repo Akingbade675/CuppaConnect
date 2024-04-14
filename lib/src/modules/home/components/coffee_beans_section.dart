@@ -1,4 +1,4 @@
-import 'package:coffee_shop_app/src/constants/coffee_beans_data.dart';
+import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/home/components/coffee_item_card.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CoffeeBeansSection extends StatelessWidget {
   const CoffeeBeansSection({super.key});
 
-  List<CoffeeBean> get coffeeBeans => CoffeeBean.getCoffeeBeans();
+  List<CoffeeItem> get coffeeBeans => CoffeeBeansData.getCoffeeBeans();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class CoffeeBeansSection extends StatelessWidget {
               separatorBuilder: (context, index) => SizedBox(width: 22.w),
               itemBuilder: (context, coffeeBeanIndex) {
                 return CoffeeItemCard(
-                  isBean: true,
                   data: coffeeBeans[coffeeBeanIndex],
                 );
               },

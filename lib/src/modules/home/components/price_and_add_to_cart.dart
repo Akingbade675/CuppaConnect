@@ -28,6 +28,7 @@ class PageBottomPrice extends StatelessWidget {
       child: Row(
         children: [
           Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(

@@ -44,6 +44,14 @@ dependencies:
     flutter_bloc: ^8.1.5
     readmore: ^3.0.0
     lottie: ^3.1.0
+    equatable: ^2.0.5
+
+    coffee_repository:
+        path: packages/coffee_repository
+    cart_repository:
+        path: packages/cart_repository
+    hive: ^2.2.3
+    hive_flutter: ^1.1.0
 
 dev_dependencies:
     flutter_test:
@@ -70,6 +78,7 @@ flutter:
     assets:
         - assets/images/
         - assets/icons/
+        - assets/animations/
         - assets/app_icons/
         - assets/app_images/
         - assets/coffee_assets/
