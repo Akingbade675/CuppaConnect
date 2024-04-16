@@ -2,6 +2,7 @@ import 'package:cart_repository/cart_repository.dart' as CartSize;
 import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/appbar.dart';
 import 'package:coffee_shop_app/src/components/coffee_description.dart';
+import 'package:coffee_shop_app/src/components/favourite_icon.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
@@ -27,7 +28,9 @@ class CoffeeDetailScreen extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AAppBar(
           leadingIcon: AppIcons.back,
-          trailingIcon: AppIcons.favourite,
+          trailingIcon: FavouriteIcon(
+            coffeeId: data.id,
+          ),
           iconBg: AppColors.iconGradient2,
           onLeadingPressed: () => context.pop(),
         ),
@@ -39,6 +42,7 @@ class CoffeeDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CoffeeDetailsImageWidget(
+                      coffeeId: data.id,
                       image: data.portraitImage,
                       name: data.name,
                       type: data.type,

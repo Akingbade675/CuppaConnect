@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AAppBar extends StatelessWidget implements PreferredSize {
   final String? title;
   final String leadingIcon;
-  final String? trailingIcon;
+  final Widget? trailingIcon;
   final Color? trailingColor;
   final String? trailingImage;
   final Gradient iconBg;
@@ -64,14 +64,7 @@ class AAppBar extends StatelessWidget implements PreferredSize {
                     height: 30.h,
                   ),
                 )
-              : trailingImage != null
-                  ? AppBarIconContainer(
-                      icon: trailingIcon!,
-                      color: trailingColor ?? AppColors.white18,
-                      gradient: iconBg,
-                      onTap: onTrailingPressed,
-                    )
-                  : null,
+              : trailingIcon,
         ),
       ],
     );
@@ -93,7 +86,7 @@ class AppBarIconContainer extends StatelessWidget {
   const AppBarIconContainer({
     super.key,
     required this.icon,
-    this.color = AppColors.white18,
+    this.color = AppColors.grey50,
     required this.gradient,
     this.onTap,
   });

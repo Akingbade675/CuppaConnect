@@ -86,7 +86,7 @@ class CoffeeData {
     // 'Latte',
   ];
 
-  static getCoffeeItems() {
+  static Map<String, List<CoffeeItem>> getCoffeeItems() {
     final Map<String, List<CoffeeItem>> coffeeItems = {};
     coffees.forEach((key, value) {
       coffeeItems[key] =
@@ -95,9 +95,20 @@ class CoffeeData {
     return coffeeItems;
   }
 
-  static getCoffeeItem({required String id, required String name}) {
-    return CoffeeItem.fromJson(coffees[name]
-        ?.firstWhere((element) => element['id'] == id) as Map<String, dynamic>);
+  static CoffeeItem getCoffeeItem({required String id, String name = ''}) {
+    final coffeeItems = getCoffeeItems();
+    return coffeeItems.values.expand((element) => element).firstWhere(
+          (element) => element.id == id,
+          orElse: () => const CoffeeItem(
+            id: 'not_found',
+            name: 'Not Found',
+            type: 'Not Found',
+            squareImage: '',
+            portraitImage: '',
+            sizes: [],
+            description: 'The coffee item you are looking for was not found.',
+          ),
+        );
   }
 
   static const coffees = {

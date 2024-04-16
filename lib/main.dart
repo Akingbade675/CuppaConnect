@@ -1,6 +1,7 @@
 import 'package:cart_repository/cart_repository.dart';
 import 'package:coffee_shop_app/app.dart';
 import 'package:coffee_shop_app/src/utils/bloc_observer/bloc_observer.dart';
+import 'package:favourite_repository/favourite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,5 +14,6 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await LocalCartRepository.init();
+  await LocalFavouriteRepository.init();
   runApp(const MyApp());
 }

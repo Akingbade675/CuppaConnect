@@ -1,5 +1,5 @@
-import 'package:coffee_shop_app/src/components/appbar.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/components/favourite_icon.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeDetailsImageWidget extends StatelessWidget {
+  final String coffeeId;
   final String image;
   final String name;
   final double? height;
@@ -17,6 +18,7 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
   final String type;
   final bool isBean;
   final bool showFavouriteIcon;
+  final VoidCallback? onTap;
 
   const CoffeeDetailsImageWidget({
     super.key,
@@ -27,45 +29,45 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
     this.borderRadius,
     this.showFavouriteIcon = false,
     this.height,
+    required this.coffeeId,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height?.h ?? MediaQuery.of(context).size.height * 0.56,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: borderRadius ?? BorderRadius.circular(0),
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: height?.h ?? MediaQuery.of(context).size.height * 0.56,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: borderRadius ?? BorderRadius.circular(0),
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CoffeeDetailsImageOverlay(
-              name: name,
-              type: type,
-              isBean: isBean,
-            ),
-          ),
-          if (showFavouriteIcon)
             Positioned(
-              right: 20.w,
-              top: 26.h,
-              child: AppBarIconContainer(
-                icon: AppIcons.favourite,
-                color: AppColors.red,
-                gradient: AppColors.iconGradient2,
-                onTap: () {},
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: CoffeeDetailsImageOverlay(
+                name: name,
+                type: type,
+                isBean: isBean,
               ),
             ),
-        ],
+            if (showFavouriteIcon)
+              Positioned(
+                right: 20.w,
+                top: 26.h,
+                child: FavouriteIcon(coffeeId: coffeeId),
+              ),
+          ],
+        ),
       ),
     );
   }

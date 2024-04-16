@@ -50,6 +50,8 @@ dependencies:
         path: packages/coffee_repository
     cart_repository:
         path: packages/cart_repository
+    favourite_repository:
+        path: packages/favourite_repository
     hive: ^2.2.3
     hive_flutter: ^1.1.0
 
