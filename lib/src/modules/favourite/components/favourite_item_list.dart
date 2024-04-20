@@ -1,5 +1,6 @@
 import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/coffee_description.dart';
+import 'package:coffee_shop_app/src/components/custom_page_router.dart';
 import 'package:coffee_shop_app/src/components/empty_coffee.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/favourite/blocs/bloc/favourite_items_bloc.dart';
@@ -42,9 +43,12 @@ class FavouriteItemList extends StatelessWidget {
             final coffee = CoffeeData.getCoffeeItem(id: coffeeId);
 
             return GestureDetector(
-                onTap: () => context.push(
-                      CoffeeDetailScreen(
-                        data: coffee,
+                onTap: () => context.pushTransition(
+                      CustomPageRouter(
+                        route: (_, animation, __) => CoffeeDetailScreen(
+                          data: coffee,
+                          animation: animation,
+                        ),
                       ),
                     ),
                 child: FavouriteListItemContainer(coffee));
@@ -77,10 +81,7 @@ class FavouriteListItemContainer extends StatelessWidget {
               ),
             ),
             showFavouriteIcon: true,
-            coffeeId: coffeeItem.id,
-            image: coffeeItem.portraitImage,
-            name: coffeeItem.name,
-            type: coffeeItem.type,
+            coffee: coffeeItem,
           ),
           Container(
             padding: EdgeInsets.all(20.w),

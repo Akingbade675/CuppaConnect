@@ -1,11 +1,7 @@
 import 'package:coffee_shop_app/src/components/app_text.dart';
-import 'package:coffee_shop_app/src/components/coffee_text.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
-import 'package:coffee_shop_app/src/modules/delivery/views/delivery_screen.dart';
-import 'package:coffee_shop_app/src/modules/order/components/coffee_qty_chooser_widget.dart';
 import 'package:coffee_shop_app/src/modules/order/components/custom_tab_bar.dart';
 import 'package:coffee_shop_app/src/modules/order/components/delivery_tab_view.dart';
-import 'package:coffee_shop_app/src/modules/order/components/discount_tag_widget.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/icon_strings.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +133,8 @@ class _OrderScreenState extends State<OrderScreen>
                   ),
                   SizedBox(height: 16.h),
                   ElevatedButton(
-                    onPressed: () => context.push(const DeliveryScreen()),
+                    onPressed:
+                        null, //() => context.push(const DeliveryScreen()),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 24.h),
                       backgroundColor: AppColors.brown,

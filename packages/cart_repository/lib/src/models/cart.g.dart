@@ -20,15 +20,16 @@ class CartItemAdapter extends TypeAdapter<CartItem> {
       name: fields[0] as String,
       type: fields[1] as String,
       image: fields[2] as String,
-      sizes: (fields[4] as List).cast<Size>(),
-      coffeeId: fields[3] as String,
+      isBean: fields[3] as bool,
+      sizes: (fields[5] as List).cast<Size>(),
+      coffeeId: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CartItem obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -36,8 +37,10 @@ class CartItemAdapter extends TypeAdapter<CartItem> {
       ..writeByte(2)
       ..write(obj.image)
       ..writeByte(3)
-      ..write(obj.coffeeId)
+      ..write(obj.isBean)
       ..writeByte(4)
+      ..write(obj.coffeeId)
+      ..writeByte(5)
       ..write(obj.sizes);
   }
 
@@ -63,6 +66,7 @@ class SizeAdapter extends TypeAdapter<Size> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Size(
+      sortOrder: fields[3] as int,
       name: fields[0] as String,
       price: fields[1] as double,
       quantity: fields[2] as int,
@@ -72,13 +76,15 @@ class SizeAdapter extends TypeAdapter<Size> {
   @override
   void write(BinaryWriter writer, Size obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.price)
       ..writeByte(2)
-      ..write(obj.quantity);
+      ..write(obj.quantity)
+      ..writeByte(3)
+      ..write(obj.sortOrder);
   }
 
   @override

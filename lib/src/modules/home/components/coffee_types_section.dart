@@ -25,6 +25,7 @@ class CoffeeTypesSection extends StatelessWidget {
               tabAlignment: TabAlignment.start,
               dividerHeight: 0,
               padding: EdgeInsets.only(right: 18.w),
+              labelPadding: EdgeInsets.only(right: 20.w),
               splashFactory: NoSplash.splashFactory,
               indicator: CircleTabIndicator(
                 radius: 4.w,

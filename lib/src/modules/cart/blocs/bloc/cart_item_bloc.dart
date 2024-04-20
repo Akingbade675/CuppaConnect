@@ -26,7 +26,8 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     try {
       final size = event.size.copyWith(quantity: 1);
 
-      final cartItem = _localCartRepository.getItem(event.coffee.id);
+      final items = Map<String, CartItem>.from((state as CartItemLoaded).items);
+      final cartItem = items[event.coffee.id];
       if (cartItem != null) {
         final sizeIndex = cartItem.sizes.indexWhere(
           (element) => element.name == size.name,
@@ -41,22 +42,27 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
         }
 
         await _localCartRepository.updateItem(cartItem);
-        // coffees[event.coffeeId] = cartItem;
-        // emit(CartItemLoaded(_localCartRepository.getItems()));
+        items.update(event.coffee.id, (value) => cartItem);
       } else {
         final newCartItem = CartItem(
           name: event.coffee.name,
           type: event.coffee.type,
+          isBean: event.coffee.isBean,
           image: event.coffee.squareImage,
           coffeeId: event.coffee.id,
           sizes: [size],
         );
         await _localCartRepository.addItem(newCartItem);
 
-        // coffees[event.coffeeId] = newCartItem;
+        items[event.coffee.id] = newCartItem;
       }
 
-      _fetchCartItems(event, emit);
+      emit(CartItemLoaded(
+        items: items,
+        totalPrice: (state as CartItemLoaded).totalPrice + size.price,
+        totalItems: (state as CartItemLoaded).totalItems + 1,
+      ));
+      // _fetchCartItems(event, emit);
     } catch (e) {
       emit(CartItemError(e.toString()));
     }
@@ -83,20 +89,26 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
 
       await _localCartRepository.updateItem(coffee);
       cartItems.update(event.coffeeId, (value) => coffee);
-      _fetchCartItems(event, emit);
+
+      emit(CartItemLoaded(
+        items: cartItems,
+        totalPrice: (state as CartItemLoaded).totalPrice + event.size.price,
+        totalItems: (state as CartItemLoaded).totalItems + 1,
+      ));
     } catch (e) {
       emit(CartItemError(e.toString()));
     }
   }
 
   void _fetchCartItems(
-    event,
+    CartItemFetch event,
     Emitter<CartItemState> emit,
   ) {
     try {
       emit(CartItemLoading());
 
-      emit(CartItemLoaded(_localCartRepository.getItems()));
+      final items = _localCartRepository.getItems();
+      _calculateTotalPrice(items, emit);
     } catch (e) {
       emit(CartItemError(e.toString()));
     }
@@ -107,18 +119,22 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
     Emitter<CartItemState> emit,
   ) async {
     try {
-      final cartItems = (state as CartItemLoaded).items;
+      final cartItems = Map.of((state as CartItemLoaded).items);
       final coffee = cartItems[event.coffeeId];
       final sizeIndex = coffee!.sizes.indexWhere(
         (element) => element.name == event.size.name,
       );
 
+      final size = coffee.sizes[sizeIndex];
       if (event.size.quantity == 1) {
         if (coffee.sizes.length == 1) {
           await _localCartRepository.removeItem(coffee.coffeeId);
           cartItems.remove(event.coffeeId);
-          // emit(CartItemLoaded(cartItems));
-          _fetchCartItems(event, emit);
+          emit(CartItemLoaded(
+            items: cartItems,
+            totalPrice: (state as CartItemLoaded).totalPrice - size.price,
+            totalItems: (state as CartItemLoaded).totalItems - 1,
+          ));
           return;
         } else {
           coffee.sizes.removeAt(sizeIndex);
@@ -131,11 +147,33 @@ class CartItemBloc extends Bloc<CartItemEvent, CartItemState> {
 
       await _localCartRepository.updateItem(coffee);
       cartItems.update(event.coffeeId, (value) => coffee);
-      // print(cartItems[event.coffeeId]);
-      // emit(CartItemLoaded(cartItems));
-      _fetchCartItems(event, emit);
+      emit(CartItemLoaded(
+        items: cartItems,
+        totalPrice: (state as CartItemLoaded).totalPrice - size.price,
+        totalItems: (state as CartItemLoaded).totalItems - 1,
+      ));
+      // _fetchCartItems(event, emit);
     } catch (e) {
       emit(CartItemError(e.toString()));
     }
+  }
+
+  void _calculateTotalPrice(
+      Map<dynamic, CartItem> items, Emitter<CartItemState> emit) {
+    double totalPrice = 0;
+    int totalItems = 0;
+
+    items.forEach((key, value) {
+      for (var element in value.sizes) {
+        totalPrice += element.price * element.quantity;
+        totalItems += element.quantity;
+      }
+    });
+
+    emit(CartItemLoaded(
+      items: items,
+      totalPrice: totalPrice,
+      totalItems: totalItems,
+    ));
   }
 }

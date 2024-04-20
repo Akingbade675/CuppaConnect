@@ -10,19 +10,8 @@ import 'package:coffee_shop_app/src/res/image_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<CartItemBloc>().add(CartItemFetch());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +32,7 @@ class _CartScreenState extends State<CartScreen> {
       builder: (context, state) {
         if (state is CartItemLoaded && state.items.isNotEmpty) {
           return PageBottomPrice(
-            price: 10.40,
+            price: state.totalPrice,
             text: 'Total Price',
             btnText: 'Pay',
             onBtnPressed: () => context.push(const PaymentScreen()),

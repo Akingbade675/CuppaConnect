@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/src/components/custom_page_router.dart';
 import 'package:flutter/material.dart';
 
 extension ContextExt on BuildContext {
@@ -45,13 +46,21 @@ extension ContextExt on BuildContext {
   double get spacingXXXXXXXXXXXXXXLarge => 68.0;
 
   void pop() => Navigator.of(this).pop();
+
   void popUntil(String routeName) =>
       Navigator.of(this).popUntil(ModalRoute.withName(routeName));
+
   void pushNamed(String routeName) => Navigator.of(this).pushNamed(routeName);
+
   void pushReplacementNamed(String routeName) =>
       Navigator.of(this).pushReplacementNamed(routeName);
+
   void pushNamedAndRemoveUntil(String routeName) =>
       Navigator.of(this).pushNamedAndRemoveUntil(routeName, (route) => false);
+
+  void pushTransition(PageRouteBuilder routerBuilder) =>
+      Navigator.of(this).push(routerBuilder);
+
   void push(Widget widget) =>
-      Navigator.of(this).push(MaterialPageRoute(builder: (context) => widget));
+      Navigator.of(this).push(CustomPageRouter(route: (_, __, ___) => widget));
 }

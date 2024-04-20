@@ -1,4 +1,5 @@
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
+import 'package:coffee_shop_app/src/components/widget_transition.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
 import 'package:coffee_shop_app/src/res/image_strings.dart';
@@ -33,40 +34,39 @@ class AAppBar extends StatelessWidget implements PreferredSize {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.transparent,
-      elevation: 0,
-      scrolledUnderElevation: 0,
-      leadingWidth: 60.w,
-      title: title != null
-          ? Text(
-              title!,
-              style: context.textTheme.headlineMedium,
-            )
-          : null,
-      leading: Padding(
-        padding: EdgeInsets.only(left: 30.w, top: 12.h, bottom: 12.h),
-        child: AppBarIconContainer(
-          onTap: onLeadingPressed,
-          icon: leadingIcon,
-          gradient: iconBg,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30.w),
+      child: AppBar(
+        backgroundColor: AppColors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        // leadingWidth: 60.w,
+        title: title != null
+            ? Text(
+                title!,
+                style: context.textTheme.headlineMedium,
+              )
+            : null,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 12.h, bottom: 12.h),
+          child: AppBarIconContainer(
+            onTap: onLeadingPressed,
+            icon: leadingIcon,
+            gradient: iconBg,
+          ),
         ),
+        actions: [
+          trailingIcon ??
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.asset(
+                  AppImages.avatar,
+                  width: 30.w,
+                  height: 30.h,
+                ),
+              ),
+        ],
       ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: 30.w),
-          child: trailingImage != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(10.r),
-                  child: Image.asset(
-                    AppImages.avatar,
-                    width: 30.w,
-                    height: 30.h,
-                  ),
-                )
-              : trailingIcon,
-        ),
-      ],
     );
   }
 
@@ -95,9 +95,10 @@ class AppBarIconContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(10.r),
       child: Container(
         height: 30.h,
-        width: 30.h,
+        width: 30.w,
         padding: EdgeInsets.all(6.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
@@ -106,9 +107,12 @@ class AppBarIconContainer extends StatelessWidget {
           ),
           gradient: gradient,
         ),
-        child: SvgIcon(
-          icon,
-          color: color,
+        child: WidgetScaleTransition(
+          child: SvgIcon(
+            icon,
+            key: UniqueKey(),
+            color: color,
+          ),
         ),
       ),
     );

@@ -54,6 +54,9 @@ dependencies:
         path: packages/favourite_repository
     hive: ^2.2.3
     hive_flutter: ^1.1.0
+    animated_text_kit: ^4.2.2
+    animated_text_lerp: ^1.0.5
+    animated_list_plus: ^0.5.2
 
 dev_dependencies:
     flutter_test:

@@ -2,6 +2,7 @@ import 'package:cart_repository/cart_repository.dart' as cart show Size;
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
+import 'package:coffee_shop_app/src/components/widget_transition.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
@@ -39,7 +40,7 @@ class MultiVariationCartQuantityPicker extends StatelessWidget {
             ),
           ),
         ),
-        PriceWidget(price: size.price, fontSize: 16),
+        PriceWidget(price: size.price * size.quantity, fontSize: 16),
         AppIconButton(
           size: 28,
           iconPath: AppIcons.minus,
@@ -56,11 +57,14 @@ class MultiVariationCartQuantityPicker extends StatelessWidget {
           size: const Size(50, 30),
           border: Border.all(color: AppColors.brown),
           child: FittedBox(
-            child: Text(
-              size.quantity.toString(),
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: AppColors.white,
-                fontSize: 16.sp,
+            child: WidgetScaleTransition(
+              child: Text(
+                size.quantity.toString(),
+                key: Key(coffeeId + size.name + size.quantity.toString()),
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: AppColors.white,
+                  fontSize: 16.sp,
+                ),
               ),
             ),
           ),

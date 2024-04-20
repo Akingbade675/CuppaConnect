@@ -37,7 +37,7 @@ class AppIconButton extends StatelessWidget {
         padding: EdgeInsets.all(padding.w),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(7),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: boxShadow,
         ),
         child: isPng

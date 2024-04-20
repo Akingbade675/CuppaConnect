@@ -36,6 +36,10 @@ class CoffeeBean extends Coffee {
         .map((coffeeBeanMap) => CoffeeBean.fromMap(coffeeBeanMap))
         .toList();
   }
+
+  static CoffeeBean getCoffeeBean({required String id}) {
+    return getCoffeeBeans().firstWhere((coffeeBean) => coffeeBean.id == id);
+  }
 }
 
 class CoffeeBeansData {

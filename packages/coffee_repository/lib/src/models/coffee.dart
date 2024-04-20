@@ -26,18 +26,25 @@ class CoffeeItem extends Equatable {
   });
 
   factory CoffeeItem.fromJson(Map<String, dynamic> json) {
+    List<Size> getSizes(Map<String, double> prices) {
+      List<Size> sizes = [];
+
+      int index = 0;
+      prices.forEach((name, price) {
+        sizes.add(Size(sortOrder: index++, name: name, price: price));
+      });
+
+      return sizes;
+    }
+
     return CoffeeItem(
-      id: json['id'],
-      name: json['name'],
-      type: json['type'],
-      squareImage: json['squareImage'],
-      portraitImage: json['portraitImage'],
-      description: json['description'],
-      sizes: (json['prices'] as Map<String, double>)
-          .entries
-          .map((e) => Size(name: e.key, price: e.value))
-          .toList(),
-    );
+        id: json['id'],
+        name: json['name'],
+        type: json['type'],
+        squareImage: json['squareImage'],
+        portraitImage: json['portraitImage'],
+        description: json['description'],
+        sizes: getSizes(json['prices'] as Map<String, double>));
   }
 
   @override
@@ -412,6 +419,21 @@ class CoffeeBeansData {
     return coffeeBeans
         .map((coffee) => CoffeeItem.fromJson(coffee).copyWith(isBean: true))
         .toList();
+  }
+
+  static CoffeeItem getCoffeeBean({required String id}) {
+    return getCoffeeBeans().firstWhere(
+      (element) => element.id == id,
+      orElse: () => const CoffeeItem(
+        id: 'not_found',
+        name: 'Not Found',
+        type: 'Not Found',
+        squareImage: '',
+        portraitImage: '',
+        sizes: [],
+        description: 'The coffee item you are looking for was not found.',
+      ),
+    );
   }
 
   static const coffeeBeans = [

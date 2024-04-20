@@ -13,14 +13,17 @@ class CartItem extends Equatable {
   @HiveField(2)
   final String image;
   @HiveField(3)
-  final String coffeeId;
+  final bool isBean;
   @HiveField(4)
+  final String coffeeId;
+  @HiveField(5)
   final List<Size> sizes;
 
   const CartItem({
     required this.name,
     required this.type,
     required this.image,
+    required this.isBean,
     required this.sizes,
     required this.coffeeId,
   });
@@ -32,6 +35,7 @@ class CartItem extends Equatable {
     String? name,
     String? type,
     String? image,
+    bool? isBean,
     String? coffeeId,
     List<Size>? sizes,
   }) {
@@ -39,6 +43,7 @@ class CartItem extends Equatable {
       name: name ?? this.name,
       type: type ?? this.type,
       image: image ?? this.image,
+      isBean: isBean ?? this.isBean,
       coffeeId: coffeeId ?? this.coffeeId,
       sizes: sizes ?? this.sizes,
     );
@@ -56,13 +61,16 @@ class Size extends Equatable {
   final double price;
   @HiveField(2)
   final int quantity;
+  @HiveField(3)
+  final int sortOrder;
 
-  const Size({required this.name, required this.price, this.quantity = 0});
+  const Size({required this.sortOrder, required this.name, required this.price, this.quantity = 0});
 
   factory Size.fromJson(Map<String, dynamic> json) {
     return Size(
       name: json['name'],
       price: json['price'],
+      sortOrder: json['sortOrder'],
       quantity: json['quantity'] ?? 0,
     );
   }
@@ -74,10 +82,12 @@ class Size extends Equatable {
     String? name,
     double? price,
     int? quantity,
+    int? sortOrder
   }) {
     return Size(
       name: name ?? this.name,
       price: price ?? this.price,
+      sortOrder: sortOrder ?? this.sortOrder,
       quantity: quantity ?? this.quantity,
     );
   }

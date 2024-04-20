@@ -1,4 +1,6 @@
+import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/components/custom_hero_widget.dart';
 import 'package:coffee_shop_app/src/components/favourite_icon.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/components/svg_icon.dart';
@@ -10,27 +12,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeDetailsImageWidget extends StatelessWidget {
-  final String coffeeId;
-  final String image;
-  final String name;
+  final CoffeeItem coffee;
   final double? height;
   final BorderRadius? borderRadius;
-  final String type;
-  final bool isBean;
   final bool showFavouriteIcon;
   final VoidCallback? onTap;
 
   const CoffeeDetailsImageWidget({
     super.key,
-    required this.image,
-    required this.name,
-    required this.type,
-    this.isBean = false,
     this.borderRadius,
     this.showFavouriteIcon = false,
     this.height,
-    required this.coffeeId,
     this.onTap,
+    required this.coffee,
   });
 
   @override
@@ -44,9 +38,12 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: borderRadius ?? BorderRadius.circular(0),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
+                child: HeroWidget(
+                  tag: 'coffeeImage_${coffee.id}',
+                  child: Image.asset(
+                    coffee.portraitImage,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -55,16 +52,17 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
               left: 0,
               right: 0,
               child: CoffeeDetailsImageOverlay(
-                name: name,
-                type: type,
-                isBean: isBean,
+                id: coffee.id,
+                name: coffee.name,
+                type: coffee.type,
+                isBean: coffee.isBean,
               ),
             ),
             if (showFavouriteIcon)
               Positioned(
                 right: 20.w,
                 top: 26.h,
-                child: FavouriteIcon(coffeeId: coffeeId),
+                child: FavouriteIcon(coffeeId: coffee.id),
               ),
           ],
         ),
@@ -74,12 +72,14 @@ class CoffeeDetailsImageWidget extends StatelessWidget {
 }
 
 class CoffeeDetailsImageOverlay extends StatelessWidget {
+  final String id;
   final String name;
   final String type;
   final bool isBean;
 
   const CoffeeDetailsImageOverlay({
     super.key,
+    required this.id,
     required this.name,
     required this.type,
     this.isBean = false,
@@ -110,15 +110,21 @@ class CoffeeDetailsImageOverlay extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.6,
-                      child: CoffeeTitleText(
-                        text: name,
-                        size: 20,
+                      child: HeroWidget(
+                        tag: 'coffeeTitleText_$id',
+                        child: CoffeeTitleText(
+                          text: name,
+                          size: 20,
+                        ),
                       ),
                     ),
                     SizedBox(height: 2.h),
-                    CoffeeSideText(
-                      text: type,
-                      size: 12,
+                    HeroWidget(
+                      tag: 'coffeeSideText_$id',
+                      child: CoffeeSideText(
+                        text: type,
+                        size: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -142,11 +148,18 @@ class CoffeeDetailsImageOverlay extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SvgIcon(AppIcons.star, color: AppColors.brown, size: 22),
+              HeroWidget(
+                tag: 'coffeeRatingBar_$id',
+                child: const SvgIcon(AppIcons.star,
+                    color: AppColors.brown, size: 22),
+              ),
               SizedBox(width: 6.w),
-              Text(
-                '4.5',
-                style: context.textTheme.bodyLarge?.copyWith(fontSize: 16.sp),
+              HeroWidget(
+                tag: 'coffeeRating_$id',
+                child: Text(
+                  '4.5',
+                  style: context.textTheme.bodyLarge?.copyWith(fontSize: 16.sp),
+                ),
               ),
               SizedBox(width: 5.w),
               Text(

@@ -12,12 +12,18 @@ sealed class CartItemState extends Equatable {
 final class CartItemLoading extends CartItemState {}
 
 final class CartItemLoaded extends CartItemState {
+  final int totalItems;
+  final double totalPrice;
   final Map<dynamic, CartItem> items;
 
-  const CartItemLoaded(this.items);
+  const CartItemLoaded({
+    required this.items,
+    required this.totalItems,
+    required this.totalPrice,
+  });
 
   @override
-  List<Object> get props => [...items.values.toList(), items.values.toList()];
+  List<Object> get props => [...items.values.toList(), totalItems, totalPrice];
 }
 
 final class CartItemError extends CartItemState {

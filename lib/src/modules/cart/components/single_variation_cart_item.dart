@@ -1,5 +1,6 @@
 import 'package:cart_repository/cart_repository.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/components/custom_hero_widget.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/modules/cart/components/single_variation_cart_qty_picker.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
@@ -24,11 +25,14 @@ class SingleVariationCartItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(16.w),
-                child: Image.asset(
-                  item.image,
-                  fit: BoxFit.cover,
-                  width: 126.w,
-                  height: 126.h,
+                child: HeroWidget(
+                  tag: 'coffeeImage_${item.coffeeId}',
+                  child: Image.asset(
+                    item.image,
+                    fit: BoxFit.cover,
+                    width: 126.w,
+                    height: 126.h,
+                  ),
                 ),
               ),
               SizedBox(width: 12.w),
@@ -37,11 +41,17 @@ class SingleVariationCartItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoffeeTitleText(text: item.name, size: 16),
+                    HeroWidget(
+                      tag: 'coffeeTitleText_${item.coffeeId}',
+                      child: CoffeeTitleText(text: item.name, size: 16),
+                    ),
                     SizedBox(height: 4.h),
-                    CoffeeSideText(
-                      text: item.type,
-                      color: AppColors.grey20,
+                    HeroWidget(
+                      tag: 'coffeeSideText_${item.coffeeId}',
+                      child: CoffeeSideText(
+                        text: item.type,
+                        color: AppColors.grey20,
+                      ),
                     ),
                     SizedBox(height: 8.h),
                     SingleVariationCartQuantityPicker(item),

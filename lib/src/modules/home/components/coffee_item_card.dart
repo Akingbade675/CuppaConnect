@@ -1,6 +1,8 @@
 import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/app_icon_button.dart';
 import 'package:coffee_shop_app/src/components/coffee_text.dart';
+import 'package:coffee_shop_app/src/components/custom_hero_widget.dart';
+import 'package:coffee_shop_app/src/components/custom_page_router.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
@@ -22,7 +24,14 @@ class CoffeeItemCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(22.r),
       onTap: () {
-        context.push(CoffeeDetailScreen(data: data));
+        context.pushTransition(
+          CustomPageRouter(
+            route: (_, animation, __) => CoffeeDetailScreen(
+              data: data,
+              animation: animation,
+            ),
+          ),
+        );
       },
       child: Container(
         // height: 239.h,
@@ -35,31 +44,46 @@ class CoffeeItemCard extends StatelessWidget {
         child: Column(
           children: [
             CoffeeImageWidget(
-                imageString: data.squareImage, isBean: data.isBean),
+              id: data.id,
+              imageString: data.squareImage,
+              isBean: data.isBean,
+            ),
             Padding(
               padding: EdgeInsets.all(10.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CoffeeTitleText(text: data.name),
+                  HeroWidget(
+                    tag: 'coffeeTitleText_${data.id}',
+                    child: CoffeeTitleText(text: data.name),
+                  ),
                   SizedBox(height: 5.h),
-                  CoffeeSideText(
-                    text: data.type,
+                  HeroWidget(
+                    tag: 'coffeeSideText_${data.id}',
+                    child: CoffeeSideText(
+                      text: data.type,
+                    ),
                   ),
                   SizedBox(height: 8.h),
                   Row(
                     children: [
-                      PriceWidget(
-                        price: data.sizes.first.price,
-                        fontSize: 15,
+                      HeroWidget(
+                        tag: 'coffeePrice_${data.id}',
+                        child: PriceWidget(
+                          price: data.sizes.first.price,
+                          fontSize: 15,
+                        ),
                       ),
                       const Spacer(),
-                      AppIconButton(
-                        size: 28,
-                        iconPath: AppIcons.plus,
-                        onPressed: () => context.read<CartItemBloc>().add(
-                              CartItemAdd(data, data.sizes.first),
-                            ),
+                      HeroWidget(
+                        tag: 'coffeeAddToCart_${data.id}',
+                        child: AppIconButton(
+                          size: 28,
+                          iconPath: AppIcons.plus,
+                          onPressed: () => context.read<CartItemBloc>().add(
+                                CartItemAdd(data, data.sizes.first),
+                              ),
+                        ),
                       ),
                     ],
                   ),
@@ -74,6 +98,7 @@ class CoffeeItemCard extends StatelessWidget {
 }
 
 class CoffeeImageWidget extends StatelessWidget {
+  final String id;
   final bool isBean;
   final String imageString;
 
@@ -81,20 +106,24 @@ class CoffeeImageWidget extends StatelessWidget {
     super.key,
     required this.imageString,
     required this.isBean,
+    required this.id,
   });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: 126.h,
-          decoration: BoxDecoration(
-            color: AppColors.grey50.withOpacity(0.16),
-            borderRadius: BorderRadius.circular(22.r),
-            image: DecorationImage(
-              image: AssetImage(imageString),
-              fit: BoxFit.cover,
+        Hero(
+          tag: 'coffeeImage_$id',
+          child: Container(
+            height: 126.h,
+            decoration: BoxDecoration(
+              color: AppColors.grey50.withOpacity(0.16),
+              borderRadius: BorderRadius.circular(22.r),
+              image: DecorationImage(
+                image: AssetImage(imageString),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -116,16 +145,22 @@ class CoffeeImageWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  SvgPicture.asset(
-                    'assets/icons/filter.svg',
-                    width: 10.w,
+                  HeroWidget(
+                    tag: 'coffeeRatingBar_$id',
+                    child: SvgPicture.asset(
+                      'assets/icons/filter.svg',
+                      width: 10.w,
+                    ),
                   ),
                   const SizedBox(width: 2),
-                  Text(
-                    '4.5',
-                    style: context.textTheme.bodyLarge?.copyWith(
-                      fontSize: 10.sp,
-                      color: AppColors.white,
+                  HeroWidget(
+                    tag: 'coffeeRating_$id',
+                    child: Text(
+                      '4.5',
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        fontSize: 10.sp,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ],

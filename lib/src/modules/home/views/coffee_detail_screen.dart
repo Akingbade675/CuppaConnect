@@ -2,10 +2,12 @@ import 'package:cart_repository/cart_repository.dart' as CartSize;
 import 'package:coffee_repository/coffee_repository.dart';
 import 'package:coffee_shop_app/src/components/appbar.dart';
 import 'package:coffee_shop_app/src/components/coffee_description.dart';
+import 'package:coffee_shop_app/src/components/custom_hero_widget.dart';
 import 'package:coffee_shop_app/src/components/favourite_icon.dart';
 import 'package:coffee_shop_app/src/components/rounded_container.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/modules/cart/blocs/bloc/cart_item_bloc.dart';
+import 'package:coffee_shop_app/src/modules/cart/components/single_variation_cart_qty_picker.dart';
 import 'package:coffee_shop_app/src/modules/home/blocs/cubit/coffee_size_cubit.dart';
 import 'package:coffee_shop_app/src/modules/home/components/details_image.dart';
 import 'package:coffee_shop_app/src/modules/home/components/price_and_add_to_cart.dart';
@@ -17,8 +19,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CoffeeDetailScreen extends StatelessWidget {
   final CoffeeItem data;
+  final Animation<double> animation;
 
-  const CoffeeDetailScreen({super.key, required this.data});
+  const CoffeeDetailScreen(
+      {super.key, required this.data, required this.animation});
 
   @override
   Widget build(BuildContext context) {
@@ -41,48 +45,49 @@ class CoffeeDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CoffeeDetailsImageWidget(
-                      coffeeId: data.id,
-                      image: data.portraitImage,
-                      name: data.name,
-                      type: data.type,
-                      isBean: data.isBean,
-                    ),
+                    CoffeeDetailsImageWidget(coffee: data),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 20.w,
                         vertical: 20.h,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...buildCoffeeDescription(
-                            context,
-                            text: data.description,
-                          ),
-                          ..._buildCoffeeSize(
-                            context,
-                            sizes: data.sizes,
-                          ),
-                        ],
+                      child: AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          final curveAnimation = CurvedAnimation(
+                            parent: animation,
+                            curve: const Interval(
+                              0.2,
+                              1.0,
+                              curve: Curves.easeInExpo,
+                            ),
+                          );
+
+                          return FadeTransition(
+                            opacity: curveAnimation,
+                            child: child,
+                          );
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...buildCoffeeDescription(
+                              context,
+                              text: data.description,
+                            ),
+                            ..._buildCoffeeSize(
+                              context,
+                              sizes: data.sizes,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            BlocBuilder<CoffeeSizeCubit, CartSize.Size?>(
-              builder: (context, sizeState) {
-                return PageBottomPrice(
-                  text: 'Price',
-                  btnText: 'Add to Cart',
-                  price: sizeState?.price ?? 0.0,
-                  onBtnPressed: () => context
-                      .read<CartItemBloc>()
-                      .add(CartItemAdd(data, sizeState!)),
-                );
-              },
-            ),
+            PriceAndAddToCartWidget(data: data),
           ],
         ),
       ),
@@ -146,5 +151,63 @@ class CoffeeDetailScreen extends StatelessWidget {
         },
       ),
     ];
+  }
+}
+
+class PriceAndAddToCartWidget extends StatelessWidget {
+  const PriceAndAddToCartWidget({
+    super.key,
+    required this.data,
+  });
+
+  final CoffeeItem data;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CartItemBloc, CartItemState>(
+      builder: (context, cartState) {
+        return BlocBuilder<CoffeeSizeCubit, CartSize.Size?>(
+            builder: (context, sizeState) {
+          if (cartState is CartItemLoaded &&
+              _isCartItem(cartState, sizeState)) {
+            final item = cartState.items.values.firstWhere(
+              (element) => element.coffeeId == data.id,
+            );
+
+            return PageBottomPrice(
+              coffeeId: data.id,
+              text: 'Price',
+              price: sizeState?.price ?? 0.0,
+              btn: HeroWidget(
+                tag: 'coffeeCartCount_${item.coffeeId}',
+                child: CartUpdateItemWidget(
+                  item: item,
+                  btnSize: 32,
+                  size: item.sizes
+                      .firstWhere((element) => element.name == sizeState?.name),
+                ),
+              ),
+            );
+          }
+          return PageBottomPrice(
+            coffeeId: data.id,
+            text: 'Price',
+            btnText: 'Add to Cart',
+            price: sizeState?.price ?? 0.0,
+            onBtnPressed: () => context.read<CartItemBloc>().add(
+                  CartItemAdd(data, sizeState!),
+                ),
+          );
+        });
+      },
+    );
+  }
+
+  bool _isCartItem(CartItemLoaded cartState, CartSize.Size? sizeState) {
+    return cartState.items.values.any(
+      (element) =>
+          element.coffeeId == data.id &&
+          element.sizes.any((element) => element.name == sizeState?.name),
+    );
   }
 }

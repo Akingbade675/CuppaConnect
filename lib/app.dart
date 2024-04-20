@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => CartItemBloc(
               context.read<LocalCartRepository>(),
-            ),
+            )..add(CartItemFetch()),
           ),
           BlocProvider(
             create: (context) => FavouriteItemsBloc(

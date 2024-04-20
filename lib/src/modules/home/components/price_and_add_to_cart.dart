@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/src/components/custom_hero_widget.dart';
 import 'package:coffee_shop_app/src/components/price_widget.dart';
 import 'package:coffee_shop_app/src/extensions/context_ext.dart';
 import 'package:coffee_shop_app/src/res/colors.dart';
@@ -5,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PageBottomPrice extends StatelessWidget {
+  final String? coffeeId;
   final String text;
-  final String btnText;
+  final Widget? btn;
+  final String? btnText;
   final double price;
   final VoidCallback? onBtnPressed;
 
@@ -14,8 +17,10 @@ class PageBottomPrice extends StatelessWidget {
     super.key,
     required this.price,
     required this.text,
-    required this.btnText,
+    this.btnText,
     this.onBtnPressed,
+    this.btn,
+    this.coffeeId,
   });
 
   @override
@@ -39,31 +44,39 @@ class PageBottomPrice extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
-              PriceWidget(price: price, fontSize: 20),
+              HeroWidget(
+                tag: 'coffeePrice_$coffeeId',
+                child: PriceWidget(price: price, fontSize: 20),
+              ),
             ],
           ),
           const Spacer(),
           SizedBox(
             height: 60.h,
-            child: ElevatedButton(
-              onPressed: onBtnPressed ?? () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.brown,
-                elevation: 0,
-                minimumSize: Size(240.w, 60.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-              ),
-              child: FittedBox(
-                child: Text(
-                  btnText,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
+            width: 240.w,
+            child: btn ??
+                HeroWidget(
+                  tag: 'coffeeAddToCart_$coffeeId',
+                  child: ElevatedButton(
+                    onPressed: onBtnPressed ?? () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.brown,
+                      elevation: 0,
+                      minimumSize: Size(240.w, 60.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                    ),
+                    child: FittedBox(
+                      child: Text(
+                        btnText ?? '',
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
           ),
         ],
       ),
