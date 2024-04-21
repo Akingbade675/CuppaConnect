@@ -1,16 +1,39 @@
-# coffee_shop_app
+# CuppaConnect
 
-A new Flutter project.
+CuppaConnect is a mobile app designed to enhance your coffee experience. Discover local cafes, share your favorite brews, and connect with fellow coffee enthusiasts, all in one place.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+-   Discover nearby cafes and roasters
+-   View coffee menu and specialties
+-   Share and rate your favorite brews
+-   Connect with other coffee lovers
+-   Seamlessly designed for iOS and Android using Flutter
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repository:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    ```bash
+    git clone https://github.com/Aki/CuppaConnect.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd CuppaConnect
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    flutter pub get
+    ```
+
+4. Run the app:
+
+    ```bash
+    flutter run
+    ```
+
+## Screenshots
